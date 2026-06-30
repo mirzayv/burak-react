@@ -1,50 +1,47 @@
 // @ts-nocheck
 import React from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Container, Stack, Box, Typography, Button } from "@mui/material";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
-import { HomePage } from "./screens/homePage/index";
-import { UserPage } from "./screens/userPage/index";
-import { OrdersPage } from "./screens/ordersPage/index";
-import { ProductsPage } from "./screens/productsPage/index";
-import { HomeNavbar } from "./components/headers/HomeNavbar";
-import { OtherNavbar } from "./components/headers/OtherNavbar";
-import { Footer } from "./components/footer";
+import { AboutPage } from "./screens/aboutPage";
+import  UsersPage  from "./screens/usersPage";
+import  OrdersPage  from "./screens/ordersPage";
+import  ProductsPage  from "./screens/productPage";
+import  HomePage  from "./screens/homePage";
+import  OtherNavbar  from "./components/headers/OtherNavbar";
+import  HomeNavbar  from "./components/headers/HomeNavbar/homeNavbar";
+import  Footer  from "./components/footer";
 import "../css/app.css";
-import "../css/navbar.css";
-import { HelpPage } from "./screens/helpPage";
+import "../css/navbar.css"
+import "../css/footer.css"
+
 function App() {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
-
+    {location.pathname === "/" ? <HomeNavbar/> : <OtherNavbar/>}
       <Switch>
-        <Route path="/products">
-          <ProductsPage />
+        <Route path="/about">
+          <AboutPage />
         </Route>
-
+        <Route path="/member-page">
+          <UsersPage />
+        </Route>
         <Route path="/orders">
           <OrdersPage />
         </Route>
-
-        <Route path="/member-page">
-          <UserPage />
+        <Route path="/produts">
+          <ProductsPage />
         </Route>
-
-        <Route path="/help">
-          <HelpPage />
-        </Route>
-
         <Route path="/">
           <HomePage />
         </Route>
       </Switch>
-      <Footer />
+      <Footer/>
     </>
+
   );
 }
+
 
 export default App;

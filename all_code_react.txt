@@ -1,0 +1,582 @@
+﻿
+
+===== D:\Projects\burak-react\src\app\components\footer\index.tsx =====
+
+export function Footer() {
+  return <div>Footer</div>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\components\headers\HomeNavbar.tsx =====
+
+// @ts-nocheck
+import { Box, Button, Container, Stack } from "@mui/material";
+import { NavLink } from "react-router-dom";
+
+export function HomeNavbar() {
+  const authmember = null;
+  return (
+    <div className="home-navbar">
+      <Container sx={{ mt: "55px", height: "642px" }}>
+        <Stack
+          direction="row"
+          sx={{
+            height: "50px",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box>
+            <NavLink to="/">
+              <img
+                style={{ width: "125px", height: "30px" }}
+                src="/icons/burak.svg"
+              />
+            </NavLink>
+          </Box>
+          <Stack
+            sx={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              minWidth: "700px",
+              alignItems: "center",
+            }}
+          >
+            <Box className={"hover-line"}>
+              <NavLink to="/" activeClassName="underline">
+                Home
+              </NavLink>
+            </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/products" activeClassName="underline">
+                Products
+              </NavLink>
+            </Box>
+            {authmember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/orders" activeClassName="underline">
+                  Orders
+                </NavLink>
+              </Box>
+            ) : null}
+            {authmember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/member-page" activeClassName="underline">
+                  My Page
+                </NavLink>
+              </Box>
+            ) : null}
+            <Box className={"hover-line"}>
+              <NavLink to="/help" activeClassName="underline">
+                Help
+              </NavLink>
+            </Box>
+            {/*BASKET*/}
+            {!authmember ? (
+              <Box>
+                <Button
+                  variant="contained"
+                  style={{ background: "#3776CC", color: "#f8f8ff" }}
+                >
+                  Login
+                </Button>
+              </Box>
+            ) : (
+              <img />
+            )}
+          </Stack>
+        </Stack>
+        <Stack>DETAILS</Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+
+===== D:\Projects\burak-react\src\app\components\headers\OtherNavbar.tsx =====
+
+export function OtherNavbar() {
+  return <div>OtherNavbar</div>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\MaterialTheme\index.ts =====
+
+import { createTheme } from "@mui/material/styles";
+import { common } from "@mui/material/colors";
+import shadow from "./shadow";
+import typography from "./typography";
+import { maxWidth } from "@mui/system";
+
+/**
+ * LIGHT THEME (DEFAULT)
+ */
+const light = {
+  palette: {
+    type: "light",
+    background: {
+      default: "#f8f8ff",
+      paper: common.white,
+    },
+    primary: {
+      contrastText: "#d7b586",
+      main: "#343434",
+    },
+    secondary: {
+      contrastText: "#343434",
+      main: "#d7b586",
+    },
+    text: {
+      primary: "#343434",
+      secondary: "#d7b586",
+      dark: common.black,
+    },
+  },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          height: "100%",
+        },
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: { height: "100%" },
+        body: { background: "#f4f6f8", height: "100%", minHeight: "100%" },
+      },
+    },
+  },
+  shadow,
+  typography,
+};
+
+// A custom theme for this app
+let theme = createTheme(light as any);
+theme = createTheme(theme, {
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          [theme.breakpoints.up("lg")]: {
+            maxWidth: "1300px",
+          },
+        },
+      },
+    },
+  },
+});
+
+export default theme;
+
+
+
+===== D:\Projects\burak-react\src\app\MaterialTheme\shadow.ts =====
+
+export default [
+  "none",
+  "0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 2px 2px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 4px 6px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 4px 6px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 4px 8px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 5px 8px -2px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 6px 12px -4px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 7px 12px -4px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 6px 16px -4px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 7px 16px -4px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 8px 18px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 9px 18px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 10px 20px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 11px 20px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 12px 22px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 13px 22px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 14px 24px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 16px 28px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 18px 30px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 20px 32px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 22px 34px -8px rgba(0,0,0,0.25)",
+  "0 0 1px 0 rgba(0,0,0,0.31), 0 24px 36px -8px rgba(0,0,0,0.25)",
+];
+
+
+
+===== D:\Projects\burak-react\src\app\MaterialTheme\styled.ts =====
+
+import { styled } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+
+export const RippleBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    color: "#44b700",
+    background: "white",
+    "&::after": {
+      position: "absolute",
+      top: "-2px",
+      left: "-2px",
+      width: "120%",
+      height: "120%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "2px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": { transform: "scale(.8)", opacity: 1 },
+    "100%": { transform: "scale(2.4)", opacity: 0 },
+  },
+}));
+
+
+
+===== D:\Projects\burak-react\src\app\MaterialTheme\typography.ts =====
+
+export default {
+  h1: { fontWeight: 500, fontSize: 35, letterSpacing: "-0.24px" },
+  h2: { fontWeight: 500, fontSize: 29, letterSpacing: "-0.24px" },
+  h3: { fontWeight: 500, fontSize: 24, letterSpacing: "-0.06px" },
+  h4: { fontWeight: 500, fontSize: 20, letterSpacing: "-0.06px" },
+  h5: { fontWeight: 500, fontSize: 16, letterSpacing: "-0.05px" },
+  h6: { fontWeight: 500, fontSize: 14, letterSpacing: "-0.05px" },
+  overline: { fontWeight: 500 },
+};
+
+
+
+===== D:\Projects\burak-react\src\app\screens\helpPage\index.tsx =====
+
+import { Container } from "@mui/material";
+
+export function HelpPage() {
+  return <Container>HelpPage</Container>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\screens\homePage\index.tsx =====
+
+import { Container } from "@mui/material";
+
+export function HomePage() {
+  return <Container>HomePage</Container>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\screens\ordersPage\index.tsx =====
+
+import { Container } from "@mui/material";
+
+export function OrdersPage() {
+  return <Container>OrdersPage</Container>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\screens\productsPage\index.tsx =====
+
+import { Container } from "@mui/material";
+
+export function ProductsPage() {
+  return <Container>ProductsPage</Container>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\screens\userPage\index.tsx =====
+
+import { Container } from "@mui/material";
+
+export function UserPage() {
+  return <Container>UserPage</Container>;
+}
+
+
+
+===== D:\Projects\burak-react\src\app\App.test.tsx =====
+
+import React from "react";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import App from "./App";
+
+test("renders learn react link", () => {
+  const { getByText } = render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  );
+  // eslint-disable-next-line testing-library/prefer-screen-queries
+  expect(getByText(/learn/i)).toBeInTheDocument();
+});
+
+
+
+===== D:\Projects\burak-react\src\app\App.tsx =====
+
+// @ts-nocheck
+import React from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { HomePage } from "./screens/homePage/index";
+import { UserPage } from "./screens/userPage/index";
+import { OrdersPage } from "./screens/ordersPage/index";
+import { ProductsPage } from "./screens/productsPage/index";
+import { HomeNavbar } from "./components/headers/HomeNavbar";
+import { OtherNavbar } from "./components/headers/OtherNavbar";
+import { Footer } from "./components/footer";
+import "../css/app.css";
+import "../css/navbar.css";
+import { HelpPage } from "./screens/helpPage";
+function App() {
+  const location = useLocation();
+
+  return (
+    <>
+      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
+
+      <Switch>
+        <Route path="/products">
+          <ProductsPage />
+        </Route>
+
+        <Route path="/orders">
+          <OrdersPage />
+        </Route>
+
+        <Route path="/member-page">
+          <UserPage />
+        </Route>
+
+        <Route path="/help">
+          <HelpPage />
+        </Route>
+
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+      <Footer />
+    </>
+  );
+}
+
+export default App;
+
+
+
+===== D:\Projects\burak-react\src\app\hooks.ts =====
+
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from './store';
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+
+
+===== D:\Projects\burak-react\src\app\store.ts =====
+
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+
+export const store = configureStore({
+  reducer: {},
+});
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
+
+
+
+===== D:\Projects\burak-react\src\css\app.css =====
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-float infinite 3s ease-in-out;
+  }
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: rgb(112, 76, 182);
+}
+
+@keyframes App-logo-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+
+===== D:\Projects\burak-react\src\css\index.css =====
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+===== D:\Projects\burak-react\src\css\navbar.css =====
+
+.home-navbar {
+     display: flex;
+     width: 100%;
+     height: 773px;
+     background: url('/public/img/banner.webp');
+     background-size: cover;
+}
+
+.home-navbar a {
+     text-decoration: none;
+}
+
+.home-navbar .hover-line a {
+     z-index: 100;
+     color: #f8f8ff;
+}
+
+.home-navbar .underline {
+     content: "";
+     display: block;
+     border-bottom: solid 2px #dfb686;
+}
+
+.home-navbar .hover-line:after {
+     content: "";
+     display: block;
+     border-bottom: solid 2px #dfb686;
+     transition: transform 250ms ease-in-out;
+     transform: scaleX(0);
+}
+
+.home-navbar .hover-line:hover:after {
+     transform: scaleX(1);
+}
+
+.home-navbar div.hover-line:after {
+     transform-origin: 0% 50%;
+}
+
+
+===== D:\Projects\burak-react\src\index.tsx =====
+
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from "./app/App";
+import reportWebVitals from "./reportWebVitals";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./app/MaterialTheme";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./css/index.css";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {/* @ts-ignore */}
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+
+===== D:\Projects\burak-react\src\react-app-env.d.ts =====
+
+/// <reference types="react-scripts" />
+
+declare module "*.css";
+
+
+
+===== D:\Projects\burak-react\src\reportWebVitals.ts =====
+
+import { ReportHandler } from 'web-vitals';
+
+const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+  if (onPerfEntry && onPerfEntry instanceof Function) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(onPerfEntry);
+      getFID(onPerfEntry);
+      getFCP(onPerfEntry);
+      getLCP(onPerfEntry);
+      getTTFB(onPerfEntry);
+    });
+  }
+};
+
+export default reportWebVitals;
+
+
+
+===== D:\Projects\burak-react\src\setupTests.ts =====
+
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import '@testing-library/jest-dom/extend-expect';
+
