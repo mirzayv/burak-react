@@ -2,7 +2,7 @@
 import React from "react";
 import { Container, Stack, Box, Typography, Button } from "@mui/material";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
-import { AboutPage } from "./screens/aboutPage";
+import AboutPage from "./screens/helpPage";
 import UsersPage from "./screens/usersPage";
 import OrdersPage from "./screens/ordersPage";
 import ProductsPage from "./screens/productPage";
@@ -21,7 +21,7 @@ function App() {
     <>
       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
       <Switch>
-        <Route path="/about">
+        <Route path="/help">
           <AboutPage />
         </Route>
         <Route path="/member-page">

@@ -1,0 +1,182 @@
+.help-page {
+     display: flex;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.help-page .help-container {
+     flex-direction: row;
+     margin-top: 50px;
+     margin-bottom: 50px;
+}
+
+.help-page .help-menu {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     width: 100%;
+     height: 60px;
+     border-bottom: 1px solid #f8f8ff;
+}
+
+.help-page .help-menu .table-list {
+     display: flex;
+     justify-content: space-between;
+}
+
+.help-page .css-1gsv261 {
+     width: 75%;
+}
+
+.help-page .css-heg063-MuiTabs-flexContainer {
+     justify-content: space-between;
+}
+
+.help-page .css-19kzrtu {
+     padding-top: 24px;
+}
+
+.help-page .help-main-content {
+     width: 100%;
+     height: 1000px;
+}
+
+.help-page .rules-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     padding: 24px;
+     border: 1px solid #ededed;
+     border-radius: 8px;
+     background: #f8f8ff;
+     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+}
+
+.rules-box .rules-frame {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: 100%;
+}
+
+.rules-box .rules-frame p {
+     border-bottom: 1px solid #dddddd;
+     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+     font-size: 1rem;
+     font-weight: 400;
+     letter-spacing: 0.00938em;
+     color: #000000;
+}
+
+.help-page .accordion-menu {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+}
+
+.help-page .admin-letter-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     padding: 60px;
+     border: 1px solid #ededed;
+     border-radius: 8px;
+     background: #f8f8ff;
+     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+}
+
+.help-page .admin-letter-box .admin-letter-container {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: 100%;
+}
+
+.help-page .admin-letter-container .admin-letter-frame {
+     display: flex;
+     flex-direction: column;
+     margin-top: 30px;
+}
+
+.help-page .admin-letter-frame span {
+     font-family: "ABeeZee";
+     font-size: 24px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 28px;
+     color: #140342;
+}
+
+.help-page .admin-letter-frame p {
+     margin-top: 20px;
+     font-family: "Sedan";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+}
+
+.help-page .admin-letter-container .admin-letter-frame {
+     display: flex;
+     flex-direction: column;
+}
+
+.help-page .admin-letter-frame .admin-input-box {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     margin-top: 30px;
+}
+
+.help-page .admin-letter-frame .admin-input-box label {
+     font-family: "Verdana";
+     font-size: 16px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 19px;
+     color: #140342;
+}
+
+.help-page .admin-letter-frame .admin-input-box input {
+     display: flex;
+     width: 100%;
+     height: 60px;
+     padding: 20px;
+     border: 1px solid #dddddd;
+     border-radius: 8px;
+     margin-top: 10px;
+     font-family: "Verdana";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f8f8ff;
+}
+
+.help-page .admin-letter-frame .admin-input-box textarea {
+     display: flex;
+     width: 100%;
+     height: 150px;
+     padding: 20px;
+     border: 1px solid #dddddd;
+     border-radius: 8px;
+     margin-top: 10px;
+     font-family: "Verdana";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f8f8ff;
+}
