@@ -161,16 +161,16 @@ export default function Products() {
           <Box className={"category-title"}>Our Family Brands</Box>
           <Stack className={"brand-list"}>
             <Box className={"review-box"}>
-              <img src={"/img/gurme.png"} />
+              <img src={"/img/gurme.webp"} />
             </Box>
             <Box className={"review-box"}>
-              <img src={"/img/seafood.png"} />
+              <img src={"/img/seafood.webp"} />
             </Box>
             <Box className={"review-box"}>
-              <img src={"/img/doner.png"} />
+              <img src={"/img/doner.webp"} />
             </Box>
             <Box className={"review-box"}>
-              <img src={"/img/sweets.png"} />
+              <img src={"/img/sweets.webp"} />
             </Box>
           </Stack>
         </Container>
