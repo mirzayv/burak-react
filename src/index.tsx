@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react";
-import {createRoot} from "react-dom/client"; 
+import { createRoot } from "react-dom/client";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
@@ -12,9 +12,10 @@ import theme from "./app/material/MaterialTheme";
 import "./css/index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 
-const container = document.getElementById('root')!;
+const container = document.getElementById("root")!;
 const root = createRoot(container);
 
+// global integration
 root.render(
   <React.StrictMode>
     <Provider store={store}>
