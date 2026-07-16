@@ -9,7 +9,7 @@ import ProductsPage from "./screens/productPage";
 import HomePage from "./screens/homePage";
 import Test from "./screens/Test";
 import OtherNavbar from "./components/headers/OtherNavbar";
-import HomeNavbar from "./components/headers/HomeNavbar/homeNavbar";
+import HomeNavbar from "./components/headers/homeNavbar";
 import Footer from "./components/footer";
 import "../css/app.css";
 import "../css/navbar.css";

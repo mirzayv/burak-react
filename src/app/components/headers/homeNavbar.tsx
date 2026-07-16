@@ -1,17 +1,35 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import Basket from "../Basket";
-
+import Basket from "./Basket";
+import React, { useState, useEffect } from "react";
 
 export default function HomeNavbar() {
-  const authmember = null;
+  const authMember = null;
+  const [count, setCount] = useState<number>(0);
+  const [value, setValue] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("componentDidMount"); // DATA FETCH
+    setCount(count + 1);
+
+    return () => {
+      console.log("componentWillUnmount");
+    };
+  }, [value]);
+
+  /** HANDLERS **/
+
+  const buttonHandler = () => {
+    setValue(!value);
+  };
+
   return (
     <div className="home-navbar">
       <Container className="navbar-container">
         <Stack className="menu">
           <Box>
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" />
+              <img className="brand-logo" src="/icons/burak.svg" alt="" />
             </NavLink>
           </Box>
           <Stack className="links">
@@ -25,14 +43,14 @@ export default function HomeNavbar() {
                 PRODUCTS
               </NavLink>
             </Box>
-            {authmember ? (
+            {authMember ? (
               <Box className={"hover-line"}>
                 <NavLink to="/orders" activeClassName="underline">
                   ORDERS
                 </NavLink>
               </Box>
             ) : null}
-            {authmember ? (
+            {authMember ? (
               <Box className={"hover-line"}>
                 <NavLink to="/member-page" activeClassName="underline">
                   My Page
@@ -45,8 +63,8 @@ export default function HomeNavbar() {
               </NavLink>
             </Box>
             {/*BASKET*/}
-            <Basket/>
-            {!authmember ? (
+            <Basket />
+            {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">
                   Login
@@ -57,6 +75,7 @@ export default function HomeNavbar() {
                 className="user-avatar"
                 src={"icons/default-user.svg"}
                 aria-haspopup={"true"}
+                alt=""
               />
             )}
           </Stack>
@@ -68,10 +87,14 @@ export default function HomeNavbar() {
             </Box>
             <Box className={""}></Box>
             <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}>24 hours service</Box>
+            <Box className={"service-txt"}>{count} hours service</Box>
             <Box className={"signup"}>
-              {!authmember ? (
-                <Button variant={"contained"} className={"signup-button"}>
+              {!authMember ? (
+                <Button
+                  variant={"contained"}
+                  className={"signup-button"}
+                  onClick={buttonHandler}
+                >
                   {" "}
                   SIGN UP
                 </Button>
