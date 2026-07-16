@@ -7,6 +7,7 @@ import UsersPage from "./screens/usersPage";
 import OrdersPage from "./screens/ordersPage";
 import ProductsPage from "./screens/productPage";
 import HomePage from "./screens/homePage";
+import Test from "./screens/Test";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import HomeNavbar from "./components/headers/HomeNavbar/homeNavbar";
 import Footer from "./components/footer";
@@ -34,7 +35,8 @@ function App() {
           <ProductsPage />
         </Route>
         <Route path="/">
-          <HomePage />
+          <Test />
+          {/* <HomePage /> */}
         </Route>
       </Switch>
       <Footer />
