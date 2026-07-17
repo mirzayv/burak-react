@@ -1,4 +1,7 @@
-===== D:\Projects\burak-react\src\app\components\divider\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\components\divider\index.tsx =====
+
 import React from 'react';
 import styled from 'styled-components';
 
@@ -21,7 +24,10 @@ function Divider(props: IDividerProps) {
 
 export default Divider;
 
-===== D:\Projects\burak-react\src\app\components\footer\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\components\footer\index.tsx =====
+
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -121,97 +127,10 @@ export default function Footer() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\components\headers\HomeNavbar\homeNavbar.tsx =====
-import { Box, Button, Container, Stack } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import Basket from "../Basket";
 
 
-export default function HomeNavbar() {
-  const authmember = null;
-  return (
-    <div className="home-navbar">
-      <Container className="navbar-container">
-        <Stack className="menu">
-          <Box>
-            <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" />
-            </NavLink>
-          </Box>
-          <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/" activeClassName="underline">
-                HOME
-              </NavLink>
-            </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName="underline">
-                PRODUCTS
-              </NavLink>
-            </Box>
-            {authmember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/orders" activeClassName="underline">
-                  ORDERS
-                </NavLink>
-              </Box>
-            ) : null}
-            {authmember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName="underline">
-                  My Page
-                </NavLink>
-              </Box>
-            ) : null}
-            <Box className={"hover-line"}>
-              <NavLink to="/help" activeClassName="underline">
-                HELP
-              </NavLink>
-            </Box>
-            {/*BASKET*/}
-            <Basket/>
-            {!authmember ? (
-              <Box>
-                <Button variant="contained" className="login-button">
-                  Login
-                </Button>
-              </Box>
-            ) : (
-              <img
-                className="user-avatar"
-                src={"icons/default-user.svg"}
-                aria-haspopup={"true"}
-              />
-            )}
-          </Stack>
-        </Stack>
-        <Stack className={"header-frame"}>
-          <Stack className={"detail"}>
-            <Box className={"head-main-txt"}>
-              World's Most Delicious Cousine
-            </Box>
-            <Box className={""}></Box>
-            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}>24 hours service</Box>
-            <Box className={"signup"}>
-              {!authmember ? (
-                <Button variant={"contained"} className={"signup-button"}>
-                  {" "}
-                  SIGN UP
-                </Button>
-              ) : null}
-            </Box>
-          </Stack>
-          <Box className={"logo-frame"}>
-            <div className={"logo-img"}></div>
-          </Box>
-        </Stack>
-      </Container>
-    </div>
-  );
-}
+===== FILE: D:\Projects\burak-react\src\app\components\headers\OtherNavbar\index.tsx =====
 
-===== D:\Projects\burak-react\src\app\components\headers\OtherNavbar\index.tsx =====
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "../Basket";
@@ -276,7 +195,10 @@ export default function OtherNavbar() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\components\headers\Basket.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\components\headers\Basket.tsx =====
+
 import React from "react";
 import { Box, Button, Stack } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -385,7 +307,126 @@ export default function Basket() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\material\MaterialTheme\index.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\components\headers\homeNavbar.tsx =====
+
+import { Box, Button, Container, Stack } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import Basket from "./Basket";
+import React, { useState, useEffect } from "react";
+
+export default function HomeNavbar() {
+  const authMember = null;
+  const [count, setCount] = useState<number>(0);
+  const [value, setValue] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("componentDidMount"); // DATA FETCH
+    setCount(count + 1);
+
+    return () => {
+      console.log("componentWillUnmount");
+    };
+  }, [value]);
+
+  /** HANDLERS **/
+
+  const buttonHandler = () => {
+    setValue(!value);
+  };
+
+  return (
+    <div className="home-navbar">
+      <Container className="navbar-container">
+        <Stack className="menu">
+          <Box>
+            <NavLink to="/">
+              <img className="brand-logo" src="/icons/burak.svg" alt="" />
+            </NavLink>
+          </Box>
+          <Stack className="links">
+            <Box className={"hover-line"}>
+              <NavLink to="/" activeClassName="underline">
+                HOME
+              </NavLink>
+            </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/products" activeClassName="underline">
+                PRODUCTS
+              </NavLink>
+            </Box>
+            {authMember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/orders" activeClassName="underline">
+                  ORDERS
+                </NavLink>
+              </Box>
+            ) : null}
+            {authMember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/member-page" activeClassName="underline">
+                  My Page
+                </NavLink>
+              </Box>
+            ) : null}
+            <Box className={"hover-line"}>
+              <NavLink to="/help" activeClassName="underline">
+                HELP
+              </NavLink>
+            </Box>
+            {/*BASKET*/}
+            <Basket />
+            {!authMember ? (
+              <Box>
+                <Button variant="contained" className="login-button">
+                  Login
+                </Button>
+              </Box>
+            ) : (
+              <img
+                className="user-avatar"
+                src={"icons/default-user.svg"}
+                aria-haspopup={"true"}
+                alt=""
+              />
+            )}
+          </Stack>
+        </Stack>
+        <Stack className={"header-frame"}>
+          <Stack className={"detail"}>
+            <Box className={"head-main-txt"}>
+              World's Most Delicious Cousine
+            </Box>
+            <Box className={""}></Box>
+            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
+            <Box className={"service-txt"}>{count} hours service</Box>
+            <Box className={"signup"}>
+              {!authMember ? (
+                <Button
+                  variant={"contained"}
+                  className={"signup-button"}
+                  onClick={buttonHandler}
+                >
+                  {" "}
+                  SIGN UP
+                </Button>
+              ) : null}
+            </Box>
+          </Stack>
+          <Box className={"logo-frame"}>
+            <div className={"logo-img"}></div>
+          </Box>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+
+===== FILE: D:\Projects\burak-react\src\app\material\MaterialTheme\index.ts =====
+
 import { createTheme } from "@mui/material/styles";
 import { common } from "@mui/material/colors";
 import shadow from "./shadow";
@@ -453,7 +494,10 @@ theme = createTheme(theme, {
 
 export default theme;
 
-===== D:\Projects\burak-react\src\app\material\MaterialTheme\shadow.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\material\MaterialTheme\shadow.ts =====
+
 export default [
 	'none',
 	'0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15)',
@@ -482,7 +526,10 @@ export default [
 	'0 0 1px 0 rgba(0,0,0,0.31), 0 24px 36px -8px rgba(0,0,0,0.25)',
 ];
 
-===== D:\Projects\burak-react\src\app\material\MaterialTheme\styled.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\material\MaterialTheme\styled.ts =====
+
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 
@@ -514,7 +561,10 @@ export const RippleBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-===== D:\Projects\burak-react\src\app\material\MaterialTheme\typography.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\material\MaterialTheme\typography.ts =====
+
 export default {
 	h1: {
 		fontWeight: 500,
@@ -551,7 +601,10 @@ export default {
 	},
 };
 
-===== D:\Projects\burak-react\src\app\screens\helpPage\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\helpPage\index.tsx =====
+
 import React from "react";
 import { Box, Container, Stack, Tabs } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -681,7 +734,10 @@ export default function HelpPage() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\ActiveUsers.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\ActiveUsers.tsx =====
+
 import { Box, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
 import { CssVarsProvider, Typography } from "@mui/joy";
@@ -731,7 +787,10 @@ export default function ActiveUsers() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\Advertisement.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\Advertisement.tsx =====
+
 import React from "react";
 
 export default function Advertisement() {
@@ -751,7 +810,10 @@ export default function Advertisement() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\Events.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\Events.tsx =====
+
 import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react"; // @ts-ignore
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
@@ -838,7 +900,10 @@ export default function Events() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\index.tsx =====
+
 import React from "react";
 import Statistics from "./Statistics";
 import PopularDishes from "./PopularDishes";
@@ -861,7 +926,10 @@ export default function HomePage() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\NewDishes.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\NewDishes.tsx =====
+
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import AspectRatio from "@mui/joy/AspectRatio";
@@ -943,7 +1011,10 @@ export default function NewDishes() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\PopularDishes.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\PopularDishes.tsx =====
+
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
@@ -1053,7 +1124,10 @@ export default function PopularDishes() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\homePage\Statistics.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\homePage\Statistics.tsx =====
+
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Divider from "../../components/divider";
@@ -1088,7 +1162,10 @@ export default function Statistics() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\ordersPage\FinishedOrders.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\ordersPage\FinishedOrders.tsx =====
+
 import React from "react";
 import { Box, Stack } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
@@ -1153,7 +1230,10 @@ export default function FinishedOrders() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\ordersPage\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\ordersPage\index.tsx =====
+
 import { useState, SyntheticEvent } from "react";
 import { Container, Stack, Box } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
@@ -1271,7 +1351,10 @@ export default function OrdersPage() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\ordersPage\PausedOrders.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\ordersPage\PausedOrders.tsx =====
+
 import React from "react";
 import { Box, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -1347,7 +1430,10 @@ export default function PausedOrders() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\ordersPage\ProcessOrders.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\ordersPage\ProcessOrders.tsx =====
+
 import React from "react";
 import { Box, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -1420,7 +1506,10 @@ export default function ProcessOrders() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\productPage\ChosenProduct.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\productPage\ChosenProduct.tsx =====
+
 import React from "react";
 import { Container, Stack, Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -1489,7 +1578,10 @@ export default function ChosenProduct() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\productPage\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\productPage\index.tsx =====
+
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ChosenProduct from "./ChosenProduct";
 import Products from "./Products";
@@ -1513,7 +1605,10 @@ export default function ProductsPage() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\productPage\Products.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\productPage\Products.tsx =====
+
 import React from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -1710,7 +1805,10 @@ export default function Products() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\usersPage\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\usersPage\index.tsx =====
+
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -1768,7 +1866,10 @@ export default function UserPage() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\screens\usersPage\Settings.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\usersPage\Settings.tsx =====
+
 import { Box } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
@@ -1841,7 +1942,87 @@ export function Settings() {
   );
 }
 
-===== D:\Projects\burak-react\src\app\App.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\screens\Test.tsx =====
+
+// @ts-nocheck
+import React, { Component } from "react";
+
+class Test extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      brand: "Ford",
+      model: "Mustang",
+      color: "red",
+      year: 1964,
+    };
+  }
+
+  changeDetail = () => {
+    this.setState({
+      color: "blue",
+      brand: "Tesla",
+      model: "Model S",
+      year: 2023,
+    });
+  };
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    // runs after first render => RETRIEVE DATA FROM BACKEND SERVER
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+    // runs before component unmount
+  }
+
+  componentDidUpdate() {}
+
+  render() {
+    return (
+      <div>
+        <h1>My {this.state.brand}</h1>
+        <p>
+          Color: {this.state.color} - Model: {this.state.model} from{" "}
+          {this.state.year}.
+        </p>
+        <button type="button" onClick={this.changeDetail}>
+          Change Detail
+        </button>
+      </div>
+    );
+  }
+}
+
+export default Test;
+
+
+
+===== FILE: D:\Projects\burak-react\src\app\App.test.tsx =====
+
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import App from './App';
+
+// test('renders learn react link', () => {
+//   const { getByText } = render(
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   );
+
+//   expect(getByText(/learn/i)).toBeInTheDocument();
+// });
+
+
+
+===== FILE: D:\Projects\burak-react\src\app\App.tsx =====
+
 // @ts-nocheck
 import React from "react";
 import { Container, Stack, Box, Typography, Button } from "@mui/material";
@@ -1851,8 +2032,9 @@ import UsersPage from "./screens/usersPage";
 import OrdersPage from "./screens/ordersPage";
 import ProductsPage from "./screens/productPage";
 import HomePage from "./screens/homePage";
+import Test from "./screens/Test";
 import OtherNavbar from "./components/headers/OtherNavbar";
-import HomeNavbar from "./components/headers/HomeNavbar/homeNavbar";
+import HomeNavbar from "./components/headers/homeNavbar";
 import Footer from "./components/footer";
 import "../css/app.css";
 import "../css/navbar.css";
@@ -1888,7 +2070,10 @@ function App() {
 
 export default App;
 
-===== D:\Projects\burak-react\src\app\hooks.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\hooks.ts =====
+
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from './store';
 
@@ -1896,7 +2081,10 @@ import type { RootState, AppDispatch } from './store';
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-===== D:\Projects\burak-react\src\app\store.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\app\store.ts =====
+
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -1912,2657 +2100,10 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-===== D:\Projects\burak-react\src\css\app.css =====
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
+===== FILE: D:\Projects\burak-react\src\lib\data\faq.ts =====
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: rgb(112, 76, 182);
-}
-
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-===== D:\Projects\burak-react\src\css\footer.css =====
-.foot-desc-txt {
-  margin-top: 22px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
-}
-
-.sns-context {
-  margin-top: 17px;
-  width: 137px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.foot-category-title {
-  width: 106px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 34px;
-  color: #c5c8c9;
-}
-
-.foot-category-link {
-  margin-top: 20px;
-  height: 170px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 170px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-}
-
-.foot-category-link a {
-  color: #e3c08d;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.find-us {
-  display: flex;
-  flex-direction: row;
-}
-
-.find-us span {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 34px;
-  color: #c5c8c9;
-}
-
-.find-us div {
-  margin-left: 10px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
-}
-
-.copyright-txt {
-  margin-top: 17px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 34px;
-  color: #e3c08d;
-}
-
-.foot-category-title:after {
-  display: block;
-  content: "";
-  border-bottom: solid 2px #d7b686;
-  transform: scaleX(0);
-  transition: transform 250ms ease-in-out;
-  transform-origin: 0% 50%;
-}
-
-.foot-category-title:hover:after {
-  transform: scaleX(1);
-}
-
-===== D:\Projects\burak-react\src\css\help.css =====
-.help-page {
-     display: flex;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-.help-page .help-container {
-     flex-direction: row;
-     margin-top: 50px;
-     margin-bottom: 50px;
-}
-
-.help-page .help-menu {
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     width: 100%;
-     height: 60px;
-     border-bottom: 1px solid #f8f8ff;
-}
-
-.help-page .help-menu .table-list {
-     display: flex;
-     justify-content: space-between;
-}
-
-.help-page .css-1gsv261 {
-     width: 75%;
-}
-
-.help-page .css-heg063-MuiTabs-flexContainer {
-     justify-content: space-between;
-}
-
-.help-page .css-19kzrtu {
-     padding-top: 24px;
-}
-
-.help-page .help-main-content {
-     width: 100%;
-     height: 1000px;
-}
-
-.help-page .rules-box {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     padding: 24px;
-     border: 1px solid #ededed;
-     border-radius: 8px;
-     background: #f8f8ff;
-     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-}
-
-.rules-box .rules-frame {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: 100%;
-}
-
-.rules-box .rules-frame p {
-     border-bottom: 1px solid #dddddd;
-     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-     font-size: 1rem;
-     font-weight: 400;
-     letter-spacing: 0.00938em;
-     color: #000000;
-}
-
-.help-page .accordion-menu {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-}
-
-.help-page .admin-letter-box {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     padding: 60px;
-     border: 1px solid #ededed;
-     border-radius: 8px;
-     background: #f8f8ff;
-     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-}
-
-.help-page .admin-letter-box .admin-letter-container {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: 100%;
-}
-
-.help-page .admin-letter-container .admin-letter-frame {
-     display: flex;
-     flex-direction: column;
-     margin-top: 30px;
-}
-
-.help-page .admin-letter-frame span {
-     font-family: "ABeeZee";
-     font-size: 24px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 28px;
-     color: #140342;
-}
-
-.help-page .admin-letter-frame p {
-     margin-top: 20px;
-     font-family: "Sedan";
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-}
-
-.help-page .admin-letter-container .admin-letter-frame {
-     display: flex;
-     flex-direction: column;
-}
-
-.help-page .admin-letter-frame .admin-input-box {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-     margin-top: 30px;
-}
-
-.help-page .admin-letter-frame .admin-input-box label {
-     font-family: "Verdana";
-     font-size: 16px;
-     font-weight: 700;
-     font-style: normal;
-     line-height: 19px;
-     color: #140342;
-}
-
-.help-page .admin-letter-frame .admin-input-box input {
-     display: flex;
-     width: 100%;
-     height: 60px;
-     padding: 20px;
-     border: 1px solid #dddddd;
-     border-radius: 8px;
-     margin-top: 10px;
-     font-family: "Verdana";
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-     background: #f8f8ff;
-}
-
-.help-page .admin-letter-frame .admin-input-box textarea {
-     display: flex;
-     width: 100%;
-     height: 150px;
-     padding: 20px;
-     border: 1px solid #dddddd;
-     border-radius: 8px;
-     margin-top: 10px;
-     font-family: "Verdana";
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-     background: #f8f8ff;
-}
-
-===== D:\Projects\burak-react\src\css\home.css =====
-.homepage {
-    width: 100%;
-    height: auto;
-}
-
-/** STATISTICS **/
-
-.homepage .static-frame {
-    width: 100%;
-    height: 236px;
-    background: #343434;
-}
-
-.homepage .static-frame .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-}
-
-.homepage .static-frame .info .static-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 116px;
-}
-
-.homepage .static-frame .info .static-box .static-num {
-    font-family: "Poppins";
-    font-size: 54px;
-    font-weight: 600;
-    font-style: normal;
-    line-height: 80px;
-    text-align: center;
-    color: #d7b686;
-}
-
-.homepage .static-frame .info .static-box .static-text {
-    font-family: "Poppins";
-    font-size: 20px;
-    font-weight: 500;
-    font-style: normal;
-    line-height: 30px;
-    text-align: center;
-    color: #d7b586;
-}
-
-/** POPULAR DISHES **/
-
-.homepage .popular-dishes-frame {
-    display: flex;
-    width: 100%;
-    height: 580px;
-    background: #f8f8ff;
-}
-
-.homepage .popular-dishes-frame .popular-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 45px;
-}
-
-.homepage .popular-dishes-frame .popular-section .category-title {
-    font-family: "Roboto Serif";
-    font-size: 36px;
-    font-weight: 600;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: 1.44px;
-    text-align: center;
-    color: #000;
-}
-
-.homepage .popular-dishes-frame .popular-section .cards-frame {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 43px;
-}
-
-.homepage .popular-dishes-frame .cards-frame .card {
-    min-width: 300px;
-    min-height: 430px;
-    cursor: pointer;
-}
-
-.homepage .popular-dishes-frame .cards-frame .card .card-cover {
-    background: linear-gradient(to top,
-            rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0) 200px),
-        linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0) 300px);
-}
-
-.homepage .popular-dishes-frame .no-data {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 300px;
-    font-family: "Poppins";
-    font-size: 30px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 34px;
-    text-transform: capitalize;
-    color: #e3c08d;
-}
-
-/** NEW PRODUCTS **/
-
-.homepage .new-products-frame {
-    display: flex;
-    width: 100%;
-    height: 605px;
-    background: #f8f8ff;
-}
-
-.homepage .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 45px;
-}
-
-.homepage .new-products-frame .category-title {
-    font-family: "Dancing Script";
-    font-size: 36px;
-    font-weight: 700;
-    font-style: normal;
-    line-height: 43px;
-}
-
-.homepage .new-products-frame .main .cards-frame {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin: 47px 2px 2px 2px;
-}
-
-.homepage .new-products-frame .main .card {
-    width: 290px;
-    height: 335px;
-    cursor: pointer;
-}
-
-.homepage .new-products-frame .product-sale {
-    position: absolute;
-    z-index: 100;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90px;
-    height: 30px;
-    border-radius: 25px;
-    margin-top: 10px;
-    font-family: "Poppins";
-    font-size: 12px;
-    font-weight: 600;
-    font-style: normal;
-    line-height: 21px;
-    color: #f8f8ff;
-    background: #ff9200;
-    box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.homepage .new-products-frame .product-detail {
-    display: flex;
-    justify-content: center;
-    width: auto;
-    height: 49%;
-    border-color: #f8f8ff;
-    border-top: 1px solid;
-    margin-top: -12px;
-    background-color: #fafbfb;
-}
-
-.homepage .new-products-frame .product-detail .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.homepage .new-products-frame .product-detail .title {
-    width: 65px;
-    font-weight: 500;
-}
-
-.homepage .new-products-frame .product-detail .price {
-    width: 20px;
-    margin-left: 10px;
-    font-weight: 500;
-}
-
-.homepage .new-products-frame .product-detail .divider {
-    width: 2px;
-    margin: 0 10px 0 10px;
-    background-color: #d9d9d9;
-}
-
-.homepage .new-products-frame .product-detail .views {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-}
-
-.homepage .new-products-frame .no-data {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 300px;
-    font-family: "Poppins";
-    font-size: 30px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 34px;
-    text-transform: capitalize;
-    color: #e3c08d;
-}
-
-/** ADVERTISEMENT **/
-
-.homepage .ads-restaurant-frame {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    height: 693px;
-    box-shadow: -3px 0px 20px 14px #34343480;
-    transform: perspective(0px);
-}
-
-.homepage .ads-restaurant-frame .ads-video {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    background: #0c0e12;
-    box-shadow: 0px -8px 90px rgb(215 215 255);
-    transform: scale(1.5);
-}
-
-/** ACTIVE USERS **/
-
-.homepage .active-users-frame {
-    display: flex;
-    width: 100%;
-    height: 550px;
-    background: #f8f8ff;
-}
-
-.homepage .active-users-frame .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 60px;
-}
-
-.homepage .active-users-frame .category-title {
-    font-family: "Dancing Script";
-    font-size: 36px;
-    font-weight: 700;
-    font-style: normal;
-    line-height: 43px;
-}
-
-.homepage .cards-frame {
-    flex-direction: row;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.homepage .cards-frame .card {
-    min-width: 305px;
-    min-height: 305px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.homepage .cards-frame .member-nickname {
-    font-size: medium;
-    text-align: center;
-}
-
-.homepage .cards-frame .no-data {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 300px;
-    font-family: "Poppins";
-    font-size: 30px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 34px;
-    text-transform: capitalize;
-    color: #e3c08d;
-}
-
-/** EVENTS **/
-
-.homepage .events-frame {
-    display: flex;
-    width: 100%;
-    height: 745px;
-    background: #f8f8ff;
-}
-
-.homepage .events-frame .category-title {
-    padding-top: 20px;
-    font-family: "Dancing Script";
-    font-size: 36px;
-    font-weight: 700;
-    font-style: normal;
-    line-height: 43px;
-}
-
-.homepage .events-frame .events-main {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.homepage .events-frame .events-main .events-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    height: 70px;
-    margin-bottom: 40px;
-}
-
-.homepage .events-frame .events-main .prev-next-frame {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    height: 25px;
-    margin: 40px 0 40px 0;
-}
-
-.homepage .events-frame .dot-frame-pagination {
-    position: relative;
-    display: flex;
-    width: auto;
-}
-
-.homepage .events-frame .events-main .events-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-}
-
-.homepage .events-frame .events-info .events-info-frame {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    height: 100%;
-}
-
-.homepage .events-frame .events-img {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    background-size: cover;
-}
-
-.homepage .events-frame .events-desc {
-    position: absolute;
-    bottom: 5px;
-    display: flex;
-    width: 90%;
-    height: auto;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 7px;
-    background: #f8f8ff;
-    box-shadow: 0px 40px 30px rgba(25, 25, 46, 0.04);
-}
-
-.homepage .events-frame .events-desc .events-bott {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 97%;
-    height: auto;
-}
-
-.homepage .events-frame .events-desc .events-bott .bott-left {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-
-.homepage .events-frame .bott-left .event-title-speaker {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.homepage .events-frame .event-title-speaker .event-organizator {
-    display: flex;
-    align-items: center;
-}
-
-.homepage .events-frame .event-title-speaker .event-organizator img {
-    width: 20px;
-    margin-right: 10px;
-}
-
-.homepage .events-frame .event-organizator .spec-text-author {
-    font-family: "GT Walsheim Pro";
-    font-style: normal;
-    line-height: 34px;
-    color: #140342;
-}
-
-.homepage .events-frame .bott-left .text-desc {
-    margin-top: 10px;
-    font-family: "GT Walsheim Pro";
-    font-size: 17px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 26px;
-    color: #4f547b;
-}
-
-.homepage .events-frame .bott-left .bott-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
-    height: 16px;
-    margin-top: 10px;
-}
-
-.homepage .events-frame .bott-info .bott-info-main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: auto;
-    height: 100%;
-    margin-left: 10px;
-    font-family: "GT Walsheim Pro";
-    font-size: 14px;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 16px;
-    color: #4f547b;
-}
-
-.homepage .events-frame .bott-info .bott-info-main img {
-    margin-right: 10px;
-}
-
-.homepage .events-frame .swiper-wrapper {
-    display: flex;
-    flex-direction: row;
-}
-
-.homepage .events-frame .swiper-pagination-bullet {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-    text-align: center;
-    background: #f8f8ff;
-    opacity: 1;
-}
-
-.homepage .events-frame .swiper-pagination-bullet-active {
-    border-radius: 50%;
-    background: #343434;
-}
-
-===== D:\Projects\burak-react\src\css\index.css =====
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-===== D:\Projects\burak-react\src\css\navbar.css =====
-/* Home Navbar */
-
-.home-navbar{
-    width: 100%;
-    height: 773px;
-    display: flex;
-    background: url('/public/img/banner.webp');
-    background-size: cover;
-}
-.home-navbar .navbar-container{
-    margin-top:55px;
-    height:642px;
-}
-
-.home-navbar .navbar-container .menu{
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.home-navbar .navbar-container .menu .brand-logo{
-   width: 125px;
-   height: 30px;
-
-}
-
-.home-navbar .navbar-container .menu .links{
-   min-width: 700px;
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: center;
-}
-
-.home-navbar .navbar-container .menu .links .login-button{
-  background-color: #3776CC;
-  color:#f8f8ff
-}
-
-.home-navbar .navbar-container .menu .user-avatar{
-  width: 50px;
-  height: 50px;
-  border-radius: 24px;
-}
-
-.home-navbar a{
-    text-decoration: none;
-}
-.home-navbar .hover-line a{
-    color: #f8f8ff;
-    z-index:100;
-}
-
-.home-navbar .underline{
-    display: block;
-    content:"";
-    border-bottom: solid 2px #dfb686;
-}
-
-.home-navbar .hover-line:after{
-    display: block;
-    content:"";
-    border-bottom: solid 2px #dfb686;
-    transform: scaleX(0);
-    transition: transform 250ms ease-in-out;
-
-}
-.home-navbar .hover-line:hover:after{
-       transform: scaleX(1);
-       
-}
-.home-navbar div.hover-line:after{
-         transform-origin: 0% 50%;
-}
-
-.home-navbar .navbar-container .header-frame{
-    margin-top: 142px;
-    height: 462px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-}
-.home-navbar .navbar-container .header-frame .detail{
-    width: 510px;
-    display: flex;
-    flex-direction: column;
-
-
-}
-.home-navbar .navbar-container .header-frame .detail .head-main-txt{
-   width: 450px;
-   height: 150px;
-   font-family: "Roboto serif";
-   font-style: normal;
-   font-size: 50px;
-   font-weight: 500;
-   line-height: normal;
-   letter-spacing: -0.75px;
-   color: #f8f8ff;
-}
-
-.home-navbar .navbar-container .header-frame .detail .wel-txt{
-   width: 510px;
-   height: 42px;
-   font-family: "Roboto serif";
-   font-style: normal;
-   font-size: 36px;
-   font-weight: 400;
-   line-height: normal;
-   letter-spacing: -0.54px;
-   color: #d7b686;
-}
-
-.home-navbar .navbar-container .header-frame .detail .service-txt{
-    margin-top: 23px;
-   width: 153px;
-   height: 23px;
-
-   font-family: "Roboto serif";
-   font-style: normal;
-   font-size: 20px;
-   font-weight: 400;
-   line-height: normal;
-   letter-spacing: -0.3px;
-   color: #d5d5d5;
-}
-
-.home-navbar .navbar-container .detail .signup{
-    margin-top: 73px;
-}
-
-.home-navbar .navbar-container .detail .signup .signup-button{
-    width: 210px;
-    height: 60px;
-    border-radius: 4px;
-    background: #1976d2;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.home-navbar .navbar-container .logo-frame{
-    margin-top: 43px;
-    width: 690px;
-    height: 419px;
-}
-
-.home-navbar .navbar-container .logo-frame .logo-img{
-  width: 100%;
-  height: 100%;
-  background: url("/public/img/logo.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: invert(25%);
-}
-/* Other navbar */
-
-.other-navbar{
-    width: 100%;
-    height: 400px;
-    display: flex;
-    background: url('/public/img/banner.webp');
-    background-size: cover;
-}
-.other-navbar .navbar-container{
-    margin-top:55px;
-}
-
-.other-navbar .navbar-container .menu{
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.other-navbar .navbar-container .menu .brand-logo{
-   width: 125px;
-   height: 30px;
-
-}
-
-.other-navbar .navbar-container .menu .links{
-   min-width: 700px;
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: center;
-}
-
-.other-navbar .navbar-container .menu .links .login-button{
-  background-color: #3776CC;
-  color:#f8f8ff
-}
-
-.other-navbar .navbar-container .menu .user-avatar{
-  width: 50px;
-  height: 50px;
-  border-radius: 24px;
-}
-
-.other-navbar a{
-    text-decoration: none;
-}
-.other-navbar .hover-line a{
-    color: #f8f8ff;
-    z-index:100;
-}
-
-.other-navbar .underline{
-    display: block;
-    content:"";
-    border-bottom: solid 2px #dfb686;
-}
-
-.other-navbar .hover-line:after{
-    display: block;
-    content:"";
-    border-bottom: solid 2px #dfb686;
-    transform: scaleX(0);
-    transition: transform 250ms ease-in-out;
-
-}
-.other-navbar .hover-line:hover:after{
-       transform: scaleX(1);
-       
-}
-.other-navbar div.hover-line:after{
-         transform-origin: 0% 50%;
-}
-
-
-/* BASKET */
-
-.basket-frame {
-  position: relative;
-  padding: 10px 4px 0px 4px;
-  width: 450px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  background: #f8f8ff;
-  border-radius: 16px;
-}
-
-.basket-frame .all-check-box {
-  padding: 0px 6px;
-  width: 100%;
-  height: 35px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: #d7b586;
-  border-width: 1px 0px;
-  border-style: solid;
-  border-color: #343434;
-}
-
-.basket-frame .basket-info-box {
-  position: relative;
-  margin-top: 6px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.basket-info-box .product-img {
-  width: 60px;
-  height: 60px;
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 29px;
-}
-
-.basket-info-box .product-name {
-  margin-left: 11px;
-  width: 185px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-  color: #000000;
-}
-
-.basket-info-box .product-price {
-  width: 80px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 22px;
-  color: #ae0000;
-}
-
-.basket-info-box
-  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 6.5px 14px;
-}
-
-.basket-info-box .css-ece9u5 {
-  min-width: 72px;
-}
-
-.basket-frame .cancel-btn {
-  position: absolute;
-  top: 33%;
-  right: 2%;
-  cursor: pointer;
-}
-
-.basket-frame .basket-order {
-  margin-top: 10px;
-  width: 100%;
-  height: 64px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.basket-order .price {
-  width: 200px;
-  display: flex;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-  color: #000000;
-}
-
-.basket-frame .orders-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-}
-
-.basket-frame .orders-wrapper::-webkit-scrollbar {
-  width: 10px;
-}
-
-.basket-frame .orders-wrapper::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 5px;
-}
-
-.basket-frame .orders-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.basket-frame .orders-main-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-top: 10px;
-  width: 100%;
-  height: 260px;
-  display: flex;
-  flex-direction: column;
-}
-
-===== D:\Projects\burak-react\src\css\order.css =====
-.order-page {
-     display: flex;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-.order-page .order-container {
-     display: flex;
-     flex-direction: row;
-     margin-top: 50px;
-     margin-bottom: 50px;
-}
-
-.order-page .order-left {
-     width: 860px;
-     height: auto;
-}
-
-.order-page .order-right {
-     display: flex;
-     flex-direction: column;
-     width: 360px;
-     height: auto;
-     margin-top: 86px;
-     margin-left: 30px;
-}
-
-.order-page .order-right .order-info-box {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 360px;
-     height: auto;
-     padding: 20px;
-     border-radius: 16px;
-     margin-bottom: 25px;
-     background: #f8f8ff;
-     box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
-}
-
-.order-page .order-right .order-info-box .member-box {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-}
-
-.order-page .order-right .order-info-box .liner {
-     width: 100%;
-     border: 1px solid #a1a1a1;
-     margin-top: 40px;
-     margin-bottom: 8px;
-}
-
-.order-page .order-info-box .order-user-img {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-}
-
-.order-page .order-info-box .order-user-img .order-user-avatar {
-     width: 117px;
-     height: 112px;
-     border-radius: 37px;
-     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-.order-page .order-info-box .order-user-icon-box {
-     position: absolute;
-     top: 81%;
-     right: 0;
-     display: flex;
-     width: 30px;
-     height: 30px;
-     padding: 5px;
-     border-radius: 37px;
-     background: rgba(0, 0, 0, 0.33);
-}
-
-.order-page .order-user-icon-box .order-user-prof-img {
-     filter: brightness(0) invert(1);
-}
-
-.order-page .order-info-box .order-user-name {
-     margin-top: 10px;
-     font-family: 'Commissioner';
-     font-size: 28px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #08090d;
-}
-
-.order-page .order-info-box .order-user-prof {
-     font-family: 'Commissioner';
-     font-size: 20px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #a1a1a1;
-}
-
-.order-page .order-info-box .order-user-address {
-     display: flex;
-     flex-direction: row;
-     width: 90%;
-}
-
-.order-page .order-info-box .spec-address-txt {
-     margin-left: 5px;
-     font-family: 'DM Sans';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 24px;
-     color: #616164;
-}
-
-.order-page .order-info-box .card-input {
-     width: 100%;
-     height: 40px;
-     padding: 10px;
-     border: 0.5px solid #b3a6a6;
-     border-radius: 10px;
-     margin-top: 10px;
-     font-family: 'Nunito';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 22px;
-     letter-spacing: -0.02em;
-     color: #434141;
-     background: #f5f5f5;
-}
-
-.order-page .order-info-box .card-half-input {
-     width: 49%;
-     height: 40px;
-     padding: 10px;
-     border: 0.5px solid #b3a6a6;
-     border-radius: 10px;
-     margin-top: 10px;
-     font-family: 'Nunito';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 22px;
-     letter-spacing: -0.02em;
-     color: #434141;
-     background: #f5f5f5;
-}
-
-.order-page .order-info-box .cards-box {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     width: 80%;
-     margin-top: 35px;
-}
-
-.order-page .order-info-box .css-wca78v-MuiButtonBase-root-MuiButton-root {
-     min-width: 160px;
-}
-
-.order-page .order-left .order-nav-frame {
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     width: 100%;
-     height: 60px;
-     border-bottom: 1px solid #f8f8ff;
-}
-
-.order-page .order-left .order-nav-frame .table-list {
-     display: flex;
-     justify-content: space-between;
-}
-
-.order-page .css-1gsv261 {
-     width: 75%;
-}
-
-.order-page .css-heg063-MuiTabs-flexContainer {
-     justify-content: space-between;
-}
-
-.order-page .order-main-content {
-     width: 855px;
-     height: auto;
-}
-
-.order-page .css-19kzrtu {
-     padding-top: 24px;
-}
-
-.order-page .order-main-content .order-main-box {
-     position: relative;
-     width: 100%;
-     max-height: 285px;
-     border-radius: 16px;
-     margin-bottom: 25px;
-     background: #f8f8ff;
-     box-shadow: -13px 16px 4px rgba(0, 0, 0, 0.25), inset 0px -3px 20px 11px #18177033;
-}
-
-.order-page .order-main-content .order-main-box .order-box-scroll {
-     position: relative;
-     display: flex;
-     overflow: hidden;
-     overflow-y: scroll;
-     flex-direction: column;
-     align-items: start;
-     width: 100%;
-     min-height: 105px;
-     max-height: 205px;
-     margin-top: 15px;
-}
-
-.order-page .order-main-content .order-main-box .order-box-scroll::-webkit-scrollbar {
-     width: 7px;
-}
-
-.order-page .order-main-content .order-main-box .order-box-scroll::-webkit-scrollbar-thumb {
-     border-radius: 5px;
-     background-color: #8989db;
-}
-
-.order-page .order-box-scroll .orders-name-price {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     height: 47px;
-     margin-top: 5px;
-     margin-left: 50px;
-}
-
-.order-page .order-box-scroll .orders-name-price .order-dish-img {
-     position: relative;
-     width: 50px;
-     height: 47px;
-     border-radius: 29px;
-     background-size: cover;
-}
-
-.order-page .order-box-scroll .orders-name-price .title-dish {
-     position: relative;
-     width: 260px;
-     height: 36px;
-     margin-left: 20px;
-     font-family: 'Commissioner';
-     font-size: 22px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #000000;
-}
-
-.order-page .order-box-scroll .orders-name-price .price-box {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     max-width: 170px;
-     height: 100%;
-     margin-left: 150px;
-}
-
-.order-page .order-box-scroll .orders-name-price .price-box p {
-     font-family: 'Poppins';
-     font-size: 18px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 27px;
-     color: #262626;
-}
-
-.order-page .order-main-content .order-main-box .total-price-box {
-     position: relative;
-     display: flex;
-     overflow: hidden;
-     flex-direction: row;
-     justify-content: space-around;
-     align-items: center;
-     box-sizing: border-box;
-     width: 100%;
-     height: 41px;
-     border-radius: 5px;
-     margin: 7px 0 7px 0;
-}
-
-.order-page .order-main-content .total-price-box .cancel-button {
-     max-height: 40px;
-     border-radius: 10px;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.order-page .order-main-content .total-price-box .pay-button {
-     max-height: 40px;
-     border-radius: 10px;
-     color: #f8f8ff;
-     background: #56b74d;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.order-page .order-main-content .total-price-box .verify-button {
-     border-radius: 10px;
-     color: #f8f8ff;
-     background: #0288d1;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.order-page .order-main-content .order-main-box .total-price-box .box-total {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     align-items: center;
-     max-width: 535px;
-     height: 100%;
-}
-
-.order-page .total-price-box .box-total p {
-     margin-left: 20px;
-     font-family: 'Commissioner';
-     font-size: 14px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #000000;
-}
-
-.order-page .total-price-box .box-total .data-compl {
-     font-family: 'Commissioner';
-     font-size: 14px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #000000;
-}
-
-===== D:\Projects\burak-react\src\css\products.css =====
-.products-page {
-     position: relative;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-/** Products **/
-
-.products-page .products {
-     display: flex;
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-.products-page .products .avatar-big-box {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 100%;
-     height: auto;
-}
-
-.products-page .products .top-text {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 100%;
-     height: 43px;
-     margin-top: 80px;
-}
-
-.products-page .products .top-text p {
-     position: relative;
-     margin-left: 380px;
-     font-family: "Dancing Script";
-     font-size: 36px;
-     font-weight: 700;
-     font-style: normal;
-     line-height: 43px;
-     color: #343434;
-}
-
-.products-page .products .single-search-big-box {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     box-sizing: border-box;
-     width: 337px;
-     height: 33px;
-     border: 1px solid #f8f8ff;
-     border-radius: 18.5px;
-     background: #fffcfc;
-     box-shadow: 0px 4px 4px rgba(213, 213, 213, 0.25);
-}
-
-.products-page .products .single-search-form {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 100%;
-}
-
-.products-page .products .single-search-input {
-     position: relative;
-     display: flex;
-     width: 225px;
-     height: 30px;
-     padding-left: 10px;
-     border: none;
-     border-radius: 10px 0px 0px 10px;
-     margin-right: 5px;
-     margin-left: 5px;
-     font-family: "GT Walsheim Pro";
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-}
-
-.products-page .products .single-button-search {
-     position: relative;
-     display: flex;
-     width: 100px;
-     height: 33px;
-     border-radius: 18px;
-     color: #d7b586;
-     background: #343434;
-}
-
-.products-page .products .prev-btn,
-.products .next-btn {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 10%;
-     height: 147px;
-}
-
-.products-page .products .restaurant-avatars-wrapper {
-     display: flex;
-     overflow: hidden;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 90%;
-     height: 147px;
-}
-
-.products-page .products .restaurant-avatars-wrapper .restaurant-avatars {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     width: 108px;
-     height: 100%;
-}
-
-.products-page .products .restaurant-avatars img {
-     width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
-
-.products-page .products .restaurant-avatars span {
-     margin-top: 14px;
-     font-family: "Solway";
-     font-size: 12px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 14px;
-     color: #fffcfc;
-}
-
-.products-page .products .product-wrapper {
-     display: flex;
-     flex-direction: row;
-     flex-wrap: wrap;
-     width: 100%;
-     height: auto;
-     margin-left: 25px;
-}
-
-.products .product-wrapper .no-data {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     font-family: "Poppins";
-     font-size: 30px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 34px;
-     text-transform: capitalize;
-     color: #e3c08d;
-}
-
-.products-page .products .product-card {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 270px;
-     height: auto;
-     margin-top: 40px;
-     margin-right: 24px;
-}
-
-.products-page .products .product-card .product-img {
-     position: relative;
-     width: 273px;
-     height: 275px;
-     border-radius: 0px 50px 0px 0px;
-     background-size: cover;
-}
-
-.products-page .products .product-img .product-sale {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 90px;
-     height: 30px;
-     border-radius: 25px;
-     margin: 10px;
-     font-family: "Poppins";
-     font-size: 12px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 21px;
-     color: #ffffff;
-     background: #ff9200;
-     box-shadow: 4px 6px 20px #0000001a;
-}
-
-.products-page .products .product-card .product-desc {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 90%;
-     cursor: pointer;
-}
-
-.products-page .products .product-desc .product-title {
-     margin-top: 10px;
-     font-family: "Poppins";
-     font-size: 20px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 30px;
-}
-
-.products-page .products .product-desc .product-desc {
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     align-items: center;
-     margin-top: 2px;
-     font-family: "Poppins";
-     font-size: 24px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 36px;
-     color: #e3c08d;
-}
-
-.products-page .products .product-img:before {
-     content: "";
-     position: absolute;
-     top: 0;
-     right: 0;
-     bottom: 0;
-     left: 0;
-     z-index: 2;
-     border-radius: 0px 50px 0px 0px;
-     background: rgba(0, 0, 0, 0.5);
-     opacity: 0;
-     transition: opacity 0.5s ease;
-}
-
-.products-page .products .product-img:hover:before {
-     border-radius: 0px 50px 0px 0px;
-     opacity: 1;
-}
-
-.products-page .products .product-img img {
-     position: absolute;
-     z-index: 1;
-     display: block;
-     max-width: 100%;
-     height: auto;
-}
-
-.products-page .products .shop-btn {
-     position: absolute;
-     top: 217px;
-     left: 105px;
-     z-index: 3;
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     width: 64px;
-     height: 46px;
-     padding: 20px;
-     border: 2px solid #d7b686;
-     border-radius: 10px;
-     font-family: "Poppins";
-     font-size: 10px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 15px;
-     color: #f8f8ff;
-     background: rgb(198 0 255 / 66%);
-     opacity: 0;
-     transition: opacity 0.5s ease;
-     cursor: pointer;
-}
-
-.products-page .products .product-img:hover .shop-btn {
-     opacity: 1;
-}
-
-.products-page .products .product-img:hover .view-btn {
-     opacity: 1;
-}
-
-.products-page .products .view-btn {
-     position: absolute;
-     top: 223px;
-     z-index: 3;
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     width: 40px;
-     min-width: 40px;
-     height: 40px;
-     padding: 5px;
-     border-radius: 50%;
-     background: rgba(0, 0, 0, 0.4);
-     opacity: 0;
-     transition: opacity 0.5s ease;
-     cursor: pointer;
-}
-
-.products-page .products .pagination-section {
-     position: relative;
-     display: flex;
-     flex-direction: row;
-     justify-content: center;
-     width: 100%;
-     margin-top: 30px;
-}
-
-.products-page .products .brands-logo {
-     display: flex;
-     width: 100%;
-     height: 630px;
-     margin-top: 60px;
-     background-color: #0d1518;
-}
-
-.products-page .products .brands-logo .family-brands {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     padding-top: 70px;
-}
-
-.products-page .products .brands-logo .family-brands .brand-list {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     width: 100%;
-}
-
-.products-page .products .brands-logo .category-title {
-     font-family: "Dancing Script";
-     font-size: 36px;
-     font-weight: 700;
-     font-style: normal;
-     line-height: 43px;
-     color: #d7b686;
-}
-
-.products-page .products .brands-logo .review-box {
-     display: flex;
-     width: 260px;
-     height: 350px;
-     border-radius: 20px;
-     margin-top: 40px;
-     box-shadow: 0px -1px 13px 5px #bab2e3c4;
-     object-fit: fill;
-}
-
-.products-page .products .brands-logo .review-box img {
-     border-radius: 20px;
-}
-
-.products-page .products .brands-logo .review-img {
-     width: 110px;
-     height: 110px;
-     border-radius: 37px;
-     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-.products-page .products .brands-logo .review-name {
-     margin-top: 10px;
-     font-family: "Commissioner";
-     font-size: 30px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #08090d;
-}
-
-.products-page .products .brands-logo .review-stars {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 149px;
-     height: 24px;
-     margin-top: 10px;
-}
-
-.products-page .products .brands-logo .review-prof {
-     font-family: "Commissioner";
-     font-size: 20px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #a1a1a1;
-}
-
-.products-page .products .brands-logo .review-desc {
-     margin-top: 10px;
-     font-family: "DM Sans";
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 24px;
-     color: #616164;
-}
-
-.products-page .products .brands-logo .about-left {
-     display: flex;
-     align-items: flex-end;
-     width: 50%;
-     height: auto;
-     border-radius: 0px 50px 0px 0px;
-     background-position: center;
-     background-size: cover;
-}
-
-.products-page .products .address {
-     height: auto;
-     margin-bottom: 60px;
-     background: #f8f8ff;
-}
-
-.products-page .products .address .address-area {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     margin-top: 60px;
-}
-
-.products-page .products .address .title {
-     font-family: "Dancing Script";
-     font-size: 36px;
-     font-weight: 700;
-     font-style: normal;
-     line-height: 43px;
-}
-
-.products-page .products .about-left .about-left-desc {
-     display: flex;
-     flex-direction: column;
-     justify-content: flex-end;
-     width: 100%;
-     height: 329px;
-     padding: 20px;
-     background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 90.88%);
-}
-
-.products-page .products .about-left-desc span {
-     font-family: "Poppins";
-     font-size: 28px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 42px;
-     color: #f8f8ff;
-}
-
-.products-page .products .brands-logo .about-right {
-     display: flex;
-     flex-direction: column;
-     justify-content: space-between;
-     width: 50%;
-     height: 480px;
-     margin-left: 20px;
-}
-
-.products-page .products .about-left-desc p {
-     margin-top: 10px;
-     font-family: "Poppins";
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #d4d4d4;
-}
-
-.products-page .products .about-right .about-right-img {
-     top: 3653px;
-     left: 763px;
-     display: flex;
-     width: 160px;
-     height: 140px;
-     border-radius: 0px 50px 0px 0px;
-     background: url("https://i0.wp.com/educationplanetonline.com/wp-content/uploads/2022/03/Culinary-Schools-in-Europe-1.jpg");
-     background-position: center;
-     background-size: cover;
-}
-
-.products-page .products .about-right .about-right-desc {
-     display: flex;
-     flex-direction: column;
-     justify-content: flex-end;
-     padding-bottom: 5px;
-     margin-left: 20px;
-}
-
-.products-page .products .about-right-desc span {
-     font-family: "Poppins";
-     font-size: 20px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 30px;
-     color: #f8f8ff;
-}
-
-.products-page .products .about-right-desc p {
-     margin-top: 10px;
-     font-family: "Poppins";
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #d4d4d4;
-}
-
-.products-page .products .swiper-wrapper {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-}
-
-.products-page .products .dishes-filter-section {
-     display: flex;
-     flex-direction: row;
-     justify-content: flex-end;
-     width: 90%;
-     margin-top: 65px;
-}
-
-.products-page .products .dishes-filter-box {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     height: auto;
-}
-
-.products-page .products .dishes-filter-box .order {
-     margin-right: 20px;
-}
-
-.products-page .products .list-category-section {
-     display: flex;
-     flex-direction: row;
-     width: 100%;
-     min-height: 600px;
-}
-
-.products-page .products .product-category {
-     display: flex;
-     flex-direction: column;
-     width: 50px;
-     height: auto;
-     margin-top: 60px;
-}
-
-.products-page .product-category .category-main {
-     display: flex;
-     flex-direction: row;
-     justify-content: end;
-     transform: rotate(-90deg);
-
-     /* Standard CSS property */
-     -moz-transform: rotate(-90deg);
-
-     /* Firefox */
-     -ms-transform: rotate(-90deg);
-
-     /* Edge */
-     -o-transform: rotate(-90deg);
-
-     /* Opera */
-     -webkit-transform: rotate(-90deg);
-}
-
-.products-page .product-category .category-main button {
-     min-width: auto;
-     margin-right: 10px;
-}
-
-.products-page .products .css-1p7b7rs-MuiBadge-badge {
-     position: absolute;
-     top: 26%;
-     right: 15%;
-}
-
-/** ChosenProduct **/
-
-.products-page .chosen-product {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-.products-page .chosen-product .product-container {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     margin-top: 80px;
-     margin-bottom: 150px;
-}
-
-.products-page .chosen-product .chosen-product-slider {
-     overflow: hidden;
-     width: 48%;
-     height: 480px;
-     border-radius: 16px;
-     background: #ffffff;
-     box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
-          inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
-}
-
-.products-page .chosen-product .chosen-product-slider .swiper-area {
-     width: 100%;
-     height: 1020px;
-     --swiper-navigation-color: #fff;
-     --swiper-pagination-color: #fff;
-}
-
-.products-page .chosen-product .chosen-product-slider .swiper-area .slider-image {
-     width: 100%;
-     height: 100%;
-}
-
-.products-page .chosen-product .chosen-product-info {
-     display: flex;
-     width: 49%;
-     height: 480px;
-     padding: 30px 40px;
-     border-radius: 16px;
-     background: #ffffff;
-     box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
-          inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
-}
-
-.products-page .chosen-product .chosen-product-info .info-box {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-}
-
-.products-page .chosen-product .info-box .product-name {
-     font-family: "Poppins";
-     font-size: 30px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 36px;
-     color: #000000;
-}
-
-.products-page .chosen-product .info-box .resto-name {
-     margin-top: 16px;
-     font-family: "Poppins";
-     font-size: 17px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 15px;
-     color: #979797;
-}
-
-.products-page .chosen-product .info-box .rating-box {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     margin-top: 20px;
-}
-
-.products-page .chosen-product .rating-box .star-box {
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     width: auto;
-     height: auto;
-}
-
-.products-page .chosen-product .rating-box .evaluation-box {
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     width: auto;
-     height: auto;
-}
-
-.products-page .chosen-product .rating-box .evaluation-box .product-view {
-     display: flex;
-     align-items: center;
-}
-
-.products-page .chosen-product .info-box .product-desc {
-     height: 112px;
-     margin-top: 30px;
-     margin-bottom: 30px;
-     font-family: "Poppins";
-     font-size: 18px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 22px;
-     color: #000000;
-}
-
-.products-page .chosen-product .info-box .product-price {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     margin-top: 20px;
-     margin-bottom: 20px;
-}
-
-.products-page .chosen-product .product-price span {
-     font-family: "Poppins";
-     font-size: 25px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 22px;
-     color: #000000;
-}
-
-.products-page .chosen-product .button-box {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     height: auto;
-}
-
-.products-page .chosen-product .button-box button {
-     width: 230px;
-     height: 44px;
-     font-family: "Poppins";
-     font-size: 15px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 22px;
-     color: #f8f8ff;
-}
-
-.products-page .chosen-product .title {
-     margin-top: 40px;
-     font-family: "Dancing Script";
-     font-size: 36px;
-     font-weight: 700;
-     font-style: normal;
-     line-height: 43px;
-}
-
-===== D:\Projects\burak-react\src\css\userPage.css =====
-.user-page {
-     display: flex;
-     width: 100%;
-     height: auto;
-     background: #f8f8ff;
-}
-
-.user-page .css-heg063-MuiTabs-flexContainer {
-     flex-direction: column;
-}
-
-.user-page .css-mn3ro6-MuiTabs-indicator {
-     width: 0px;
-     height: 0px;
-}
-
-.user-page .css-1ujnqem-MuiTabs-root {
-     width: 100%;
-}
-
-.user-page .my-page-frame {
-     display: flex;
-     flex-direction: row;
-     width: 100%;
-     height: auto;
-     padding: 50px 0 50px 0;
-}
-
-.my-page-frame .my-page-left {
-     display: flex;
-     flex-direction: column;
-     width: 70%;
-     height: auto;
-}
-
-.my-page-left .menu-name {
-     display: flex;
-     justify-content: center;
-     width: 100%;
-     height: 70px;
-     border-bottom: 1px solid #f8f8ff;
-     font-family: 'Poppins';
-     font-size: 45px;
-     font-weight: 600;
-     font-style: normal;
-     color: #f8f8ff;
-}
-
-.my-page-left .menu-content {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-     margin-top: 10px;
-}
-
-.my-page-left .write-content {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-     margin-top: 10px;
-}
-
-.user-page .menu-content .post-content {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-     margin-top: 10px;
-}
-
-.my-page-frame .my-page-right {
-     display: flex;
-     flex-direction: column;
-     width: 30%;
-     height: auto;
-     margin-left: 30px;
-}
-
-.user-page .order-info-box {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 100%;
-     height: auto;
-     padding: 20px;
-     border-radius: 16px;
-     background: #f6f2ff;
-     box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
-}
-
-.user-page .order-info-box .settings-btn {
-     position: absolute;
-     top: 6%;
-     right: 19%;
-     cursor: pointer;
-}
-
-.user-page .order-info-box .order-user-img {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-}
-
-.user-page .order-info-box .order-user-img .order-user-avatar {
-     width: 150px;
-     height: 150px;
-     border-radius: 37px;
-     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-.user-page .order-info-box .order-user-icon-box {
-     position: absolute;
-     top: 81%;
-     right: 0;
-     display: flex;
-     width: 37px;
-     height: 37px;
-     padding: 5px;
-     border-radius: 37px;
-     background: rgb(209 209 209 / 33%);
-}
-
-.user-page .order-info-box .order-user-name {
-     margin-top: 10px;
-     font-family: 'Commissioner';
-     font-size: 28px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #08090d;
-}
-
-.user-page .order-info-box .order-user-prof {
-     font-family: 'Commissioner';
-     font-size: 20px;
-     font-weight: 500;
-     font-style: normal;
-     line-height: 36px;
-     color: #a1a1a1;
-}
-
-.user-page .order-info-box .user-media-box {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     width: 60%;
-     margin-top: 10px;
-}
-
-.user-page .order-info-box .user-desc {
-     display: flex;
-     justify-content: center;
-     width: 90%;
-     margin-top: 30px;
-     font-family: 'DM Sans';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 24px;
-     color: #616164;
-}
-
-.user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
-     min-width: 90%;
-     height: 44px;
-     margin-top: 15px;
-     font-size: 25px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 38px;
-     text-transform: capitalize;
-     color: #f8f8ff;
-}
-
-.user-page .menu-box img {
-     width: 25px;
-}
-
-.user-page .menu-box span {
-     margin-left: 30px;
-     font-family: 'Poppins';
-     font-size: 25px;
-     font-weight: 600;
-     font-style: normal;
-     line-height: 38px;
-     color: #000000;
-}
-
-.user-page .settings {
-     display: flex;
-     flex-direction: column;
-     width: 95%;
-     height: auto;
-}
-
-.user-page .settings .input-frame {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-     width: 100%;
-     height: auto;
-}
-
-.user-page .settings .short-input {
-     display: flex;
-     flex-direction: column;
-     width: 49%;
-     height: auto;
-}
-
-.user-page .settings .long-input {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     height: auto;
-}
-
-.user-page .settings .spec-label {
-     font-family: 'Source Serif Pro';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 25px;
-     color: #f8f8ff;
-}
-
-.user-page .settings .spec-input {
-     position: relative;
-     width: 100%;
-     height: 54px;
-     padding-left: 20px;
-     border: none;
-     border-radius: 5px;
-     margin-top: 10px;
-     font-family: 'GT Walsheim Pro';
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-     background: #f7f7f7;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.user-page .settings .spec-textarea {
-     position: relative;
-     width: 100%;
-     height: 200px;
-     padding: 20px;
-     border: none;
-     border-radius: 5px;
-     margin-top: 10px;
-     font-family: 'GT Walsheim Pro';
-     font-size: 15px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 26px;
-     color: #4f547b;
-     background: #f7f7f7;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.user-page .settings .member-media-frame {
-     position: relative;
-     display: flex;
-     width: 100%;
-     height: auto;
-     padding: 10px;
-     border-radius: 5px;
-     margin-top: 25px;
-}
-
-.user-page .settings .member-media-frame .mb-image {
-     width: 100px;
-     height: 100px;
-     border-radius: 50%;
-}
-
-.user-page .settings .media_change-box {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     width: auto;
-     height: 100%;
-     margin-left: 20px;
-}
-
-.user-page .settings .media-change-box span {
-     font-family: 'GT Walsheim Pro';
-     font-size: 16px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 18px;
-     color: #140342;
-}
-
-.user-page .settings .media-change-box p {
-     margin: 10px 0px 14px 0px;
-     font-family: 'GT Walsheim Pro';
-     font-size: 14px;
-     font-weight: 400;
-     font-style: normal;
-     line-height: 16px;
-     color: #4f547b;
-}
-
-.user-page .settings .up-del-box {
-     position: relative;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 37px;
-     height: 37px;
-     border-radius: 8px;
-     background: #cbcbcb;
-}
-
-.user-page .settings .up-del-box input {
-     position: absolute;
-     overflow: hidden;
-     clip: rect(0, 0, 0, 0);
-     width: 20px;
-     height: 16px;
-     padding: 0;
-     border: 0;
-     margin: -1px;
-     background: red;
-}
-
-.user-page .settings .save-box {
-     display: flex;
-     justify-content: flex-end;
-     margin-top: 25px;
-}
-
-===== D:\Projects\burak-react\src\lib\data\faq.ts =====
 export const faq = [
   {
     question: "How to make order?",
@@ -4592,7 +2133,10 @@ export const faq = [
   },
 ];
 
-===== D:\Projects\burak-react\src\lib\data\plans.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\lib\data\plans.ts =====
+
 export const plans = [
   {
     title: "Hot Discount Days",
@@ -4628,7 +2172,10 @@ export const plans = [
   },
 ];
 
-===== D:\Projects\burak-react\src\lib\data\terms.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\lib\data\terms.ts =====
+
 export const terms = [
   "Making orders from the site is complete, live register to use communications you must pass.",
   "This is why you cannot cancel your orders once you have paid for them check before making payments.",
@@ -4636,7 +2183,10 @@ export const terms = [
   "All your actions are under the control of our restaurant administration, so please follow the general rules.",
 ];
 
-===== D:\Projects\burak-react\src\src\global.d.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\src\global.d.ts =====
+
 declare module "*.css";
 import * as React from "react";
 
@@ -4650,7 +2200,10 @@ declare global {
 
 export {};
 
-===== D:\Projects\burak-react\src\index.tsx =====
+
+
+===== FILE: D:\Projects\burak-react\src\index.tsx =====
+
 // @ts-nocheck
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -4684,11 +2237,16 @@ root.render(
 
 reportWebVitals();
 
-===== D:\Projects\burak-react\src\react-app-env.d.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\react-app-env.d.ts =====
+
 /// <reference types="react-scripts" />
 declare module "*.css";
 
-===== D:\Projects\burak-react\src\reportWebVitals.ts =====
+
+===== FILE: D:\Projects\burak-react\src\reportWebVitals.ts =====
+
 import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {
@@ -4705,7 +2263,10 @@ const reportWebVitals = (onPerfEntry?: ReportHandler) => {
 
 export default reportWebVitals;
 
-===== D:\Projects\burak-react\src\setupTests.ts =====
+
+
+===== FILE: D:\Projects\burak-react\src\setupTests.ts =====
+
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
