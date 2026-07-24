@@ -5,7 +5,7 @@ import { Link, Route, Switch, useLocation } from "react-router-dom";
 import AboutPage from "./screens/helpPage";
 import UsersPage from "./screens/usersPage";
 import OrdersPage from "./screens/ordersPage";
-import ProductsPage from "./screens/productPage";
+import ProductsPage from "./screens/productsPage";
 import HomePage from "./screens/homePage";
 import Test from "./screens/Test";
 import OtherNavbar from "./components/headers/OtherNavbar";
