@@ -107,7 +107,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </Box>
             <p className={"product-desc"}>
               {chosenProduct?.productDesc
-                ? chosenProduct.productDesc
+                ? chosenProduct?.productDesc
                 : "No Description"}
             </p>
             <Divider height="1" width="100%" bg="#000000" />
@@ -116,7 +116,21 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <span>${chosenProduct?.productPrice}</span>
             </div>
             <div className={"button-box"}>
-              <Button variant="contained">Add To Basket</Button>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  onAdd({
+                    _id: chosenProduct._id,
+                    quantity: 1,
+                    name: chosenProduct.productName,
+                    price: chosenProduct.productPrice,
+                    image: chosenProduct.productImages[0],
+                  });
+                  e.stopPropagation();
+                }}
+              >
+                Add To Basket
+              </Button>
             </div>
           </Box>
         </Stack>
