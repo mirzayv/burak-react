@@ -8,7 +8,6 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setProducts } from "./slice";
@@ -19,6 +18,7 @@ import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,7 +28,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -234,7 +239,7 @@ export default function Products() {
                   const sizeVolume =
                     product.productCollection === ProductCollection.DRINK
                       ? product.productVolume + " litre"
-                      : product.productSize + " size";
+                      : product.productSize + " size ";
                   return (
                     <Stack
                       key={product._id}
@@ -245,14 +250,27 @@ export default function Products() {
                         className={"product-img"}
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
-                        <div className={"product-sale"}>{sizeVolume}</div>
-                        <Button className={"shop-btn"}>
+                        <div className="product-sale">{sizeVolume}</div>
+                        <Button
+                          className="shop-btn"
+                          onClick={(e) => {
+                            console.log("BUTTON PRESSED!");
+                            onAdd({
+                              _id: product._id,
+                              quantity: 1,
+                              name: product.productName,
+                              price: product.productPrice,
+                              image: product.productImages[0],
+                            });
+                            e.stopPropagation();
+                          }}
+                        >
                           <img
                             src={"/icons/shopping-cart.svg"}
                             style={{ display: "flex" }}
                           />
                         </Button>
-                        <Button className={"view-btn"} sx={{ right: "36px" }}>
+                        <Button className="view-btn" sx={{ right: "36px" }}>
                           <Badge
                             badgeContent={product.productViews}
                             color="secondary"

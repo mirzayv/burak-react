@@ -2561,3 +2561,5571 @@ export default reportWebVitals;
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
+
+
+===== FILE: src\app\components\divider\index.tsx =====
+
+import React from 'react';
+import styled from 'styled-components';
+
+export interface IDividerProps {
+	width?: string;
+	height?: string;
+	bg?: string;
+}
+
+const DividerComponent = styled.span<IDividerProps>`
+	display: flex;
+	min-width: ${({ width }) => `${width}px`};
+	min-height: ${({ height }) => `${height}px`};
+	background: ${({ bg }) => `${bg}`};
+`;
+
+function Divider(props: IDividerProps) {
+	return <DividerComponent {...props} />;
+}
+
+export default Divider;
+
+
+===== FILE: src\app\components\footer\index.tsx =====
+
+import React from "react";
+import { Box, Container, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const Footers = styled.div`
+  width: 100%;
+  height: 590px;
+  display: flex;
+  background: #343434;
+  background-size: cover;
+`;
+
+export default function Footer() {
+  const authMember = null;
+
+  return (
+    <Footers>
+      <Container>
+        <Stack direction="row" sx={{ mt: "55px" }}>
+          <Stack direction={"column"} style={{ width: "340px" }}>
+            <Box>
+              <img width={"100px"} src={"/icons/burak.svg"} />
+            </Box>
+            <Box className={"foot-desc-txt"}>
+              Focusing on the gourmet Turkish breakfast as well as the youth
+              society, CZN Burak Gurme aims to bring Turkish cuisine back. CZN
+              Burak Gurme creates an illusion with its cuisine.
+            </Box>
+            <Box className="sns-context">
+              <img src={"/icons/facebook.svg"} />
+              <img src={"/icons/twitter.svg"} />
+              <img src={"/icons/instagram.svg"} />
+              <img src={"/icons/youtube.svg"} />
+            </Box>
+          </Stack>
+          <Stack sx={{ ml: "288px" }} direction={"row"}>
+            <Stack>
+              <Box>
+                <Box className={"foot-category-title"}>Bo'limlar</Box>
+                <Box className={"foot-category-link"}>
+                  <Link to="/">Home</Link>
+                  <Link to="/products">Products</Link>
+                  {authMember && <Link to="/orders">Orders</Link>}
+                  <Link to="/help">Help</Link>
+                </Box>
+              </Box>
+            </Stack>
+            <Stack sx={{ ml: "100px" }}>
+              <Box>
+                <Box className={"foot-category-title"}>Find us</Box>
+                <Box
+                  className="foot-category-link"
+                  sx={{
+                    mt: "20px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box
+                    className="find-us"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <span>L.</span>
+                    <div>Downtown, Dubai</div>
+                  </Box>
+                  <Box className={"find-us"}>
+                    <span>P.</span>
+                    <div>+971 4 554 7777</div>
+                  </Box>
+                  <Box className={"find-us"}>
+                    <span>E.</span>
+                    <div>devexuz@gmail.com</div>
+                  </Box>
+                  <Box className={"find-us"}>
+                    <span>H.</span>
+                    <div>Visit 24 hours</div>
+                  </Box>
+                </Box>
+              </Box>
+            </Stack>
+          </Stack>
+        </Stack>
+        <Stack
+          style={{ border: "1px solid #C5C8C9", width: "100%", opacity: "0.2" }}
+          sx={{ mt: "80px" }}
+        ></Stack>
+        <Stack className={"copyright-txt"}>
+          © Copyright Devex Global, All rights reserved.
+        </Stack>
+      </Container>
+    </Footers>
+  );
+}
+
+
+===== FILE: src\app\components\headers\OtherNavbar\index.tsx =====
+
+import { Box, Button, Container, Stack } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import Basket from "../Basket";
+
+export default function OtherNavbar() {
+  const authmember = null;
+  return (
+    <div className="other-navbar">
+      <Container className="navbar-container">
+        <Stack className="menu">
+          <Box>
+            <NavLink to="/">
+              <img className="brand-logo" src="/icons/burak.svg" />
+            </NavLink>
+          </Box>
+          <Stack className="links">
+            <Box className={"hover-line"}>
+              <NavLink to="/">HOME</NavLink>
+            </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/products" activeClassName="underline">
+                PRODUCTS
+              </NavLink>
+            </Box>
+            {authmember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/orders" activeClassName="underline">
+                  ORDERS
+                </NavLink>
+              </Box>
+            ) : null}
+            {authmember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/member-page" activeClassName="underline">
+                  My Page
+                </NavLink>
+              </Box>
+            ) : null}
+            <Box className={"hover-line"}>
+              <NavLink to="/help" activeClassName="underline">
+                HELP
+              </NavLink>
+            </Box>
+               <Basket/>
+            {!authmember ? (
+              <Box>
+                <Button variant="contained" className="login-button">
+                  Login
+                </Button>
+              </Box>
+            ) : (
+              <img
+                className="user-avatar"
+                src={"icons/default-user.svg"}
+                aria-haspopup={"true"}
+              />
+            )}
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\components\headers\Basket.tsx =====
+
+import React from "react";
+import { Box, Button, Stack } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import CancelIcon from "@mui/icons-material/Cancel";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useHistory } from "react-router-dom";
+
+export default function Basket() {
+  const authMember = null;
+  const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  /** HANDLERS **/
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box className={"hover-line"}>
+      <IconButton
+        aria-label="cart"
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        <Badge badgeContent={3} color="secondary">
+          <img src={"/icons/shopping-cart.svg"} />
+        </Badge>
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        // onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <Stack className={"basket-frame"}>
+          <Box className={"all-check-box"}>
+            <div>Cart is empty!</div>
+          </Box>
+
+          <Box className={"orders-main-wrapper"}>
+            <Box className={"orders-wrapper"}>
+              <Box className={"basket-info-box"}>
+                <div className={"cancel-btn"}>
+                  <CancelIcon color={"primary"} />
+                </div>
+                <img src={"/img/fresh.webp"} className={"product-img"} />
+                <span className={"product-name"}>Kebab</span>
+                <p className={"product-price"}>$10 x 1</p>
+                <Box sx={{ minWidth: 120 }}>
+                  <div className="col-2">
+                    <button className="remove">-</button>{" "}
+                    <button className="add">+</button>
+                  </div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className={"basket-order"}>
+            <span className={"price"}>Total: $100 (98 +2)</span>
+            <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              Order
+            </Button>
+          </Box>
+        </Stack>
+      </Menu>
+    </Box>
+  );
+}
+
+
+===== FILE: src\app\components\headers\homeNavbar.tsx =====
+
+import { Box, Button, Container, Stack } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import Basket from "./Basket";
+import React, { useState, useEffect } from "react";
+
+export default function HomeNavbar() {
+  const authMember = null;
+  const [count, setCount] = useState<number>(0);
+  const [value, setValue] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("componentDidMount"); // DATA FETCH
+    setCount(count + 1);
+
+    return () => {
+      console.log("componentWillUnmount");
+    };
+  }, [value]);
+
+  /** HANDLERS **/
+
+  const buttonHandler = () => {
+    setValue(!value);
+  };
+
+  return (
+    <div className="home-navbar">
+      <Container className="navbar-container">
+        <Stack className="menu">
+          <Box>
+            <NavLink to="/">
+              <img className="brand-logo" src="/icons/burak.svg" alt="" />
+            </NavLink>
+          </Box>
+          <Stack className="links">
+            <Box className={"hover-line"}>
+              <NavLink to="/" activeClassName="underline">
+                HOME
+              </NavLink>
+            </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/products" activeClassName="underline">
+                PRODUCTS
+              </NavLink>
+            </Box>
+            {authMember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/orders" activeClassName="underline">
+                  ORDERS
+                </NavLink>
+              </Box>
+            ) : null}
+            {authMember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/member-page" activeClassName="underline">
+                  My Page
+                </NavLink>
+              </Box>
+            ) : null}
+            <Box className={"hover-line"}>
+              <NavLink to="/help" activeClassName="underline">
+                HELP
+              </NavLink>
+            </Box>
+            {/*BASKET*/}
+            <Basket />
+            {!authMember ? (
+              <Box>
+                <Button variant="contained" className="login-button">
+                  Login
+                </Button>
+              </Box>
+            ) : (
+              <img
+                className="user-avatar"
+                src={"icons/default-user.svg"}
+                aria-haspopup={"true"}
+                alt=""
+              />
+            )}
+          </Stack>
+        </Stack>
+        <Stack className={"header-frame"}>
+          <Stack className={"detail"}>
+            <Box className={"head-main-txt"}>
+              World's Most Delicious Cousine
+            </Box>
+            <Box className={""}></Box>
+            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
+            <Box className={"service-txt"}>{count} hours service</Box>
+            <Box className={"signup"}>
+              {!authMember ? (
+                <Button
+                  variant={"contained"}
+                  className={"signup-button"}
+                  onClick={buttonHandler}
+                >
+                  {" "}
+                  SIGN UP
+                </Button>
+              ) : null}
+            </Box>
+          </Stack>
+          <Box className={"logo-frame"}>
+            <div className={"logo-img"}></div>
+          </Box>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\material\MaterialTheme\index.ts =====
+
+import { createTheme } from "@mui/material/styles";
+import { common } from "@mui/material/colors";
+import shadow from "./shadow";
+import typography from "./typography";
+import { maxWidth } from "@mui/system";
+
+/**
+ * LIGHT THEME (DEFAULT)
+ */
+const light = {
+  palette: {
+    type: "light",
+    background: {
+      default: "#f8f8ff",
+      paper: common.white,
+    },
+    primary: {
+      contrastText: "#d7b586",
+      main: "#343434",
+    },
+    secondary: {
+      contrastText: "#343434",
+      main: "#d7b586",
+    },
+    text: {
+      primary: "#343434",
+      secondary: "#d7b586",
+      dark: common.black,
+    },
+  },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          height: "100%",
+        },
+      },
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: { height: "100%" },
+        body: { background: "#f4f6f8", height: "100%", minHeight: "100%" },
+      },
+    },
+  },
+  shadow,
+  typography,
+};
+
+// A custom theme for this app
+let theme = createTheme(light);
+theme = createTheme(theme, {
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          [theme.breakpoints.up("lg")]: {
+            maxWidth: "1300px",
+          },
+        },
+      },
+    },
+  },
+});
+
+export default theme;
+
+
+===== FILE: src\app\material\MaterialTheme\shadow.ts =====
+
+export default [
+	'none',
+	'0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 2px 2px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 3px 4px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 4px 6px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 4px 6px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 4px 8px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 5px 8px -2px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 6px 12px -4px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 7px 12px -4px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 6px 16px -4px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 7px 16px -4px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 8px 18px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 9px 18px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 10px 20px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 11px 20px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 12px 22px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 13px 22px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 14px 24px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 16px 28px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 18px 30px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 20px 32px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 22px 34px -8px rgba(0,0,0,0.25)',
+	'0 0 1px 0 rgba(0,0,0,0.31), 0 24px 36px -8px rgba(0,0,0,0.25)',
+];
+
+
+===== FILE: src\app\material\MaterialTheme\styled.ts =====
+
+import { styled } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+
+export const RippleBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    color: "#44b700",
+    background: "white",
+    "&::after": {
+      position: "absolute",
+      top: "-2px",
+      left: "-2px",
+      width: "120%",
+      height: "120%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "2px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
+
+
+===== FILE: src\app\material\MaterialTheme\typography.ts =====
+
+export default {
+	h1: {
+		fontWeight: 500,
+		fontSize: 35,
+		letterSpacing: '-0.24px',
+	},
+	h2: {
+		fontWeight: 500,
+		fontSize: 29,
+		letterSpacing: '-0.24px',
+	},
+	h3: {
+		fontWeight: 500,
+		fontSize: 24,
+		letterSpacing: '-0.06px',
+	},
+	h4: {
+		fontWeight: 500,
+		fontSize: 20,
+		letterSpacing: '-0.06px',
+	},
+	h5: {
+		fontWeight: 500,
+		fontSize: 16,
+		letterSpacing: '-0.05px',
+	},
+	h6: {
+		fontWeight: 500,
+		fontSize: 14,
+		letterSpacing: '-0.05px',
+	},
+	overline: {
+		fontWeight: 500,
+	},
+};
+
+
+===== FILE: src\app\screens\helpPage\index.tsx =====
+
+import React from "react";
+import { Box, Container, Stack, Tabs } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Tab from "@mui/material/Tab";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Button from "@mui/material/Button";
+import TabContext from "@mui/lab/TabContext";
+import TabPanel from "@mui/lab/TabPanel";
+import "../../../css/help.css";
+import { faq } from "../../../lib/data/faq";
+import { terms } from "../../../lib/data/terms";
+
+export default function HelpPage() {
+  const [value, setValue] = React.useState("1");
+
+  /** HANDLERS **/
+
+  const handleChange = (e: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={"help-page"}>
+      <Container className={"help-container"}>
+        <TabContext value={value}>
+          <Box className={"help-menu"}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+                className={"table_list"}
+              >
+                <Tab label="TERMS" value={"1"} />
+                <Tab label="FAQ" value={"2"} />
+                <Tab label="CONTACT" value={"3"} />
+              </Tabs>
+            </Box>
+          </Box>
+          <Stack>
+            <Stack className={"help-main-content"}>
+              <TabPanel value={"1"}>
+                <Stack className={"rules-box"}>
+                  <Box className={"rules-frame"}>
+                    {terms.map((value, number) => {
+                      return <p key={number}>{value}</p>;
+                    })}
+                  </Box>
+                </Stack>
+              </TabPanel>
+              <TabPanel value={"2"}>
+                <Stack className={"accordion-menu"}>
+                  {faq.map((value, number) => {
+                    return (
+                      <Accordion key={number}>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
+                        >
+                          <Typography>{value.question}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography>{value.answer}</Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    );
+                  })}
+                </Stack>
+              </TabPanel>
+              <TabPanel value={"3"}>
+                <Stack className={"admin-letter-box"}>
+                  <Stack className={"admin-letter-container"}>
+                    <Box className={"admin-letter-frame"}>
+                      <span>Contact us!</span>
+                      <p>Fill out below form to send a message!</p>
+                    </Box>
+                    <form
+                      action={"#"}
+                      method={"POST"}
+                      className={"admin-letter-frame"}
+                    >
+                      <div className={"admin-input-box"}>
+                        <label>Your name</label>
+                        <input
+                          type={"text"}
+                          name={"memberNick"}
+                          placeholder={"Type your name here"}
+                        />
+                      </div>
+                      <div className={"admin-input-box"}>
+                        <label>Your email</label>
+                        <input
+                          type={"text"}
+                          name={"memberEmail"}
+                          placeholder={"Type your email here"}
+                        />
+                      </div>
+                      <div className={"admin-input-box"}>
+                        <label>Message</label>
+                        <textarea
+                          name={"memberMsg"}
+                          placeholder={"Your message"}
+                        ></textarea>
+                      </div>
+                      <Box
+                        display={"flex"}
+                        justifyContent={"flex-end"}
+                        sx={{ mt: "30px" }}
+                      >
+                        <Button type={"submit"} variant="contained">
+                          Send
+                        </Button>
+                      </Box>
+                    </form>
+                  </Stack>
+                </Stack>
+              </TabPanel>
+            </Stack>
+          </Stack>
+        </TabContext>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\ActiveUsers.tsx =====
+
+import { Box, Container, Stack } from "@mui/material";
+import Card from "@mui/joy/Card";
+import { CssVarsProvider, Typography } from "@mui/joy";
+import CardOverflow from "@mui/joy/CardOverflow";
+import AspectRatio from "@mui/joy/AspectRatio";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveTopUsers } from "./selector";
+import { serverApi } from "../../../lib/config";
+import { Member } from "../../../lib/types/member";
+
+/** REDUX SLICE & SELECTOR */
+const topUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({
+  topUsers,
+}));
+
+export default function ActiveUsers() {
+  const { topUsers } = useSelector(topUsersRetriever);
+  return (
+    <div className={"active-users-frame"}>
+      <Container>
+        <Stack className={"main"}>
+          <Box className={"category-title"}>Active Users</Box>
+          <Stack className={"cards-frame"}>
+            <CssVarsProvider>
+              {topUsers.length !== 0 ? (
+                topUsers.map((member: Member) => {
+                  const imagePath = `${serverApi}/${member.memberImage}`;
+                  return (
+                    <Card key={member._id} variant="outlined" className="card">
+                      <CardOverflow>
+                        <AspectRatio ratio="1">
+                          <img src={imagePath} alt="" />
+                        </AspectRatio>
+                      </CardOverflow>
+                      <CardOverflow>
+                        <Typography className={"member-nickname"}>
+                          {member.memberNick}
+                        </Typography>
+                      </CardOverflow>
+                    </Card>
+                  );
+                })
+              ) : (
+                <Box className="no-data">No Active Users!</Box>
+              )}
+            </CssVarsProvider>
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\Advertisement.tsx =====
+
+import React from "react";
+
+export default function Advertisement() {
+  return (
+    <div className="ads-restaurant-frame">
+      <video
+        className={"ads-video"}
+        autoPlay={true}
+        loop
+        muted
+        playsInline
+        data-video-media=""
+      >
+        <source type="video/mp4" src="video/burak-ads.mp4" />
+      </video>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\Events.tsx =====
+
+import { Box, Stack } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react"; // @ts-ignore
+import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
+import { plans } from "../../../lib/data/plans";
+
+SwiperCore.use([Autoplay, Navigation, Pagination]);
+
+export default function Events() {
+  return (
+    <div className={"events-frame"}>
+      <Stack className={"events-main"}>
+        <Box className={"events-text"}>
+          <span className={"category-title"}>Events</span>
+        </Box>
+
+        <Swiper
+          className={"events-info swiper-wrapper"}
+          slidesPerView={"auto"}
+          centeredSlides={true}
+          spaceBetween={30}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }}
+          pagination={{
+            el: ".swiper-pagination",
+            clickable: true,
+          }}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: true,
+          }}
+        >
+          {plans.map((value, number) => {
+            return (
+              <SwiperSlide key={number} className={"events-info-frame"}>
+                <div className={"events-img"}>
+                  <img src={value.img} className={"events-img"} />
+                </div>
+                <Box className={"events-desc"}>
+                  <Box className={"events-bott"}>
+                    <Box className={"bott-left"}>
+                      <div className={"event-title-speaker"}>
+                        <strong>{value.title}</strong>
+                        <div className={"event-organizator"}>
+                          <img src={"/icons/speaker.svg"} />
+                          <p className={"spec-text-author"}>{value.author}</p>
+                        </div>
+                      </div>
+
+                      <p className={"text-desc"}> {value.desc} </p>
+
+                      <div className={"bott-info"}>
+                        <div className={"bott-info-main"}>
+                          <img src={"/icons/calendar.svg"} />
+                          {value.date}
+                        </div>
+                        <div className={"bott-info-main"}>
+                          <img src={"/icons/location.svg"} />
+                          {value.location}
+                        </div>
+                      </div>
+                    </Box>
+                  </Box>
+                </Box>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        <Box className={"prev-next-frame"}>
+          <img
+            src={"/icons/arrow-right.svg"}
+            className={"swiper-button-prev"}
+          />
+          <div className={"dot-frame-pagination swiper-pagination"}></div>
+          <img
+            src={"/icons/arrow-right.svg"}
+            className={"swiper-button-next"}
+            style={{ transform: "rotate(-180deg)" }}
+          />
+        </Box>
+      </Stack>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\index.tsx =====
+
+import React, { useEffect } from "react";
+import Statistics from "./Statistics";
+import PopularDishes from "./PopularDishes";
+import NewDishes from "./NewDishes";
+import Advertisement from "./Advertisement";
+import ActiveUsers from "./ActiveUsers";
+import Events from "./Events";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setNewDishes, setPopularDishes, setTopUsers } from "./slice";
+import { Product } from "../../../lib/types/product";
+import ProductService from "../../../app/services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import "../../../css/home.css";
+import { Member } from "../../../lib/types/member";
+import MemberService from "../../services/MemberService";
+
+/** REDUX SLICE & SELECTOR */
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
+  setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
+  setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
+});
+
+export default function HomePage() {
+  const { setPopularDishes, setNewDishes, setTopUsers } =
+    actionDispatch(useDispatch());
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts({
+        page: 1,
+        limit: 4,
+        order: "productViews",
+        productCollection: ProductCollection.DISH,
+      })
+      .then((data) => {
+        setPopularDishes(data);
+      })
+      .catch((err) => console.log(err));
+
+    product
+      .getProducts({
+        page: 1,
+        limit: 4,
+        order: "createdAt",
+      })
+      .then((data) => setNewDishes(data))
+      .catch((err) => console.log(err));
+
+    const member = new MemberService();
+    member
+      .getTopUsers()
+      .then((data) => setTopUsers(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <div className={"homepage"}>
+      <Statistics />
+      <PopularDishes />
+      <NewDishes />
+      <Advertisement />
+      <ActiveUsers />
+      <Events />
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\NewDishes.tsx =====
+
+import React from "react";
+import { Box, Container, Stack } from "@mui/material";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Typography from "@mui/joy/Typography";
+import { CssVarsProvider } from "@mui/joy/styles";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Divider from "../../components/divider";
+
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveNewDishes } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { serverApi } from "../../../lib/config";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+
+/** REDUX SLICE & SELECTOR */
+const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
+  newDishes,
+}));
+
+export default function NewDishes() {
+  const { newDishes } = useSelector(newDishesRetriever);
+
+  console.log("newDishes:", newDishes);
+
+  return (
+    <div className={"new-products-frame"}>
+      <Container>
+        <Stack className={"main"}>
+          <Box className={"category-title"}>Fresh Menu</Box>
+          <Stack className={"cards-frame"}>
+            <CssVarsProvider>
+              {newDishes.length !== 0 ? (
+                newDishes.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + "l"
+                      : product.productSize + " size ";
+                  return (
+                    <Card
+                      key={product._id}
+                      variant="outlined"
+                      className={"card"}
+                    >
+                      <CardOverflow>
+                        <div className="product-sale">{sizeVolume}</div>
+                        <AspectRatio ratio="1">
+                          <img src={imagePath} alt="" />
+                        </AspectRatio>
+                      </CardOverflow>
+
+                      <CardOverflow variant="soft" className="product-detail">
+                        <Stack className="info">
+                          <Stack flexDirection={"row"} className={"title"}>
+                            <Typography className={"title"}>
+                              {product.productName}
+                            </Typography>
+                            <Divider width="2" height="24" bg="#d9d9d9" />
+                            <Typography className={"price"}>
+                              ${product.productPrice}
+                            </Typography>
+                          </Stack>
+                          <Stack>
+                            <Typography className={"views"}>
+                              {product.productViews}
+                              <VisibilityIcon
+                                sx={{ fontSize: 20, marginLeft: "5px" }}
+                              />
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </CardOverflow>
+                    </Card>
+                  );
+                })
+              ) : (
+                <Box className="no-data">New products are not available!</Box>
+              )}
+            </CssVarsProvider>
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\PopularDishes.tsx =====
+
+import React from "react";
+import { Box, Container, Stack } from "@mui/material";
+import Card from "@mui/joy/Card";
+import CardCover from "@mui/joy/CardCover";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import { CssVarsProvider } from "@mui/joy/styles";
+import CardOverflow from "@mui/joy/CardOverflow";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrievePopularDishes } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { serverApi } from "../../../lib/config";
+
+/** REDUX SLICE & SELECTOR */
+const popularDishesRetriever = createSelector(
+  retrievePopularDishes,
+  (popularDishes) => ({ popularDishes }),
+);
+
+export default function PopularDishes() {
+  const { popularDishes } = useSelector(popularDishesRetriever);
+
+  return (
+    <div className="popular-dishes-frame">
+      <Container>
+        <Stack className="popular-section">
+          <Box className="category-title">Popular Dishes</Box>
+          <Stack className="cards-frame">
+            {popularDishes.length !== 0 ? (
+              popularDishes.map((product: Product) => {
+                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                return (
+                  <CssVarsProvider key={product._id}>
+                    <Card className={"card"}>
+                      <CardCover>
+                        <img src={imagePath} alt="" />
+                      </CardCover>
+                      <CardCover className="card-cover" />
+                      <CardContent sx={{ justifyContent: "flex-end" }}>
+                        <Stack
+                          flexDirection={"row"}
+                          justifyContent={"space-between"}
+                        >
+                          <Typography
+                            level="h2"
+                            fontSize="lg"
+                            textColor="#fff"
+                            mb={1}
+                          >
+                            {product.productName}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: "md",
+                              color: "neutral.300",
+                              alignItems: "center",
+                              display: "flex",
+                            }}
+                          >
+                            {product.productViews}
+                            <VisibilityIcon
+                              sx={{ fontSize: 25, marginLeft: "5px" }}
+                            />
+                          </Typography>
+                        </Stack>
+                      </CardContent>
+                      <CardOverflow
+                        sx={{
+                          display: "flex",
+                          gap: 1.5,
+                          py: 1.5,
+                          px: "var(--Card-padding)",
+                          borderTop: "1px solid",
+                          height: "60px",
+                          width: "290px",
+                        }}
+                      >
+                        <Typography
+                          startDecorator={<DescriptionOutlinedIcon />}
+                          textColor="neutral.300"
+                          sx={{
+                            display: "block",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                          noWrap
+                        >
+                          {product.productDesc}
+                        </Typography>
+                      </CardOverflow>
+                    </Card>
+                  </CssVarsProvider>
+                );
+              })
+            ) : (
+              <Box className="no-data">Popular products are not available!</Box>
+            )}
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\homePage\selector.ts =====
+
+import { createSelector } from "reselect";
+import { AppRootState } from "../../../lib/types/screen";
+
+const selectHomePage = (state: AppRootState) => state.homePage;
+
+export const retrievePopularDishes = createSelector(
+  selectHomePage,
+  (HomePage) => HomePage.popularDishes,
+);
+
+export const retrieveNewDishes = createSelector(
+  selectHomePage,
+  (HomePage) => HomePage.newDishes,
+);
+
+export const retrieveTopUsers = createSelector(
+  selectHomePage,
+  (HomePage) => HomePage.topUsers,
+);
+
+
+===== FILE: src\app\screens\homePage\slice.ts =====
+
+import { createSlice } from "@reduxjs/toolkit";
+import { HomePageState } from "../../../lib/types/screen";
+
+const initialState: HomePageState = {
+  popularDishes: [],
+  newDishes: [],
+  topUsers: [],
+};
+
+const homePageSlice = createSlice({
+  name: "homePage",
+  initialState,
+  reducers: {
+    setPopularDishes: (state, action) => {
+      state.popularDishes = action.payload;
+    },
+    setNewDishes: (state, action) => {
+      state.newDishes = action.payload;
+    },
+    setTopUsers: (state, action) => {
+      state.topUsers = action.payload;
+    },
+  },
+});
+
+export const { setPopularDishes, setNewDishes, setTopUsers } =
+  homePageSlice.actions;
+
+const HomePageReducer = homePageSlice.reducer;
+export default HomePageReducer;
+
+
+===== FILE: src\app\screens\homePage\Statistics.tsx =====
+
+import React from "react";
+import { Box, Container, Stack } from "@mui/material";
+import Divider from "../../components/divider";
+
+export default function Statistics() {
+  return (
+    <div className={"static-frame"}>
+      <Container>
+        <Stack className="info">
+          <Stack className="static-box">
+            <Box className="static-num">12</Box>
+            <Box className="static-text">Restaurants</Box>
+          </Stack>
+          <Divider height="64" width="2" bg="#E3C08D" />
+          <Stack className="static-box">
+            <Box className="static-num">8</Box>
+            <Box className="static-text">Experience</Box>
+          </Stack>
+          <Divider height="64" width="2" bg="#E3C08D" />
+          <Stack className="static-box">
+            <Box className="static-num">50+</Box>
+            <Box className="static-text">Menu</Box>
+          </Stack>
+          <Divider height="64" width="2" bg="#E3C08D" />
+          <Stack className="static-box">
+            <Box className="static-num">200+</Box>
+            <Box className="static-text">Clients</Box>
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\ordersPage\FinishedOrders.tsx =====
+
+import React from "react";
+import { Box, Stack } from "@mui/material";
+import TabPanel from "@mui/lab/TabPanel";
+
+export default function FinishedOrders() {
+  return (
+    <TabPanel value={"3"}>
+      <Stack>
+        {[1, 2].map((ele, index) => {
+          return (
+            <Box key={index} className={"order-main-box"}>
+              <Box className={"order-box-scroll"}>
+                {[1, 2, 3].map((ele2, index2) => {
+                  return (
+                    <Box key={index2} className={"orders-name-price"}>
+                      <img
+                        src={"/img/kebab-fresh.webp"}
+                        className={"order-dish-img"}
+                      />
+                      <p className={"title-dish"}>Kebab</p>
+                      <Box className={"price-box"}>
+                        <p>$12</p>
+                        <img src={"/icons/close.svg"} />
+                        <p>2</p>
+                        <img src={"/icons/pause.svg"} />
+                        <p style={{ marginLeft: "15px" }}>$24</p>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              <Box className={"total-price-box"}>
+                <Box className={"box-total"}>
+                  <p>Product price</p>
+                  <p>$24</p>
+                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+                  <p>Delivery cost</p>
+                  <p>$2</p>
+                  <img
+                    src={"/icons/pause.svg"}
+                    style={{ marginLeft: "20px" }}
+                  />
+                  <p>Total</p>
+                  <p>$26</p>
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
+
+        {false && (
+          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+            <img
+              src={"/icons/noimage-list.svg"}
+              style={{ width: 300, height: 300 }}
+            />
+          </Box>
+        )}
+      </Stack>
+    </TabPanel>
+  );
+}
+
+
+===== FILE: src\app\screens\ordersPage\index.tsx =====
+
+import { useState, SyntheticEvent } from "react";
+import { Container, Stack, Box } from "@mui/material";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PausedOrders from "./PausedOrders";
+import ProcessOrders from "./ProcessOrders";
+import FinishedOrders from "./FinishedOrders";
+import "../../../css/order.css";
+
+export default function OrdersPage() {
+  const [value, setValue] = useState("1");
+
+  const handleChange = (e: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={"order-page"}>
+      <Container className="order-container">
+        <Stack className={"order-left"}>
+          <TabContext value={value}>
+            <Box className={"order-nav-frame"}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  className={"table_list"}
+                >
+                  <Tab label="PAUSED ORDERS" value={"1"} />
+                  <Tab label="PROCESS ORDERS" value={"2"} />
+                  <Tab label="FINISHED ORDERS" value={"3"} />
+                </Tabs>
+              </Box>
+            </Box>
+            <Stack className={"order-main-content"}>
+              <PausedOrders />
+              <ProcessOrders />
+              <FinishedOrders />
+            </Stack>
+          </TabContext>
+        </Stack>
+
+        <Stack className={"order-right"}>
+          <Box className={"order-info-box"}>
+            <Box className={"member-box"}>
+              <div className={"order-user-img"}>
+                <img
+                  src={"/icons/default-user.svg"}
+                  className={"order-user-avatar"}
+                />
+                <div className={"order-user-icon-box"}>
+                  <img
+                    src={"/icons/user-badge.svg"}
+                    className={"order-user-prof-img"}
+                  />
+                </div>
+              </div>
+              <span className={"order-user-name"}>Martin</span>
+              <span className={"order-user-prof"}>User</span>
+            </Box>
+            <Box className={"liner"}></Box>
+            <Box className={"order-user-address"}>
+              <div style={{ display: "flex" }}>
+                <LocationOnIcon />
+              </div>
+              <div className={"spec-address-txt"}>Do not exist</div>
+            </Box>
+          </Box>
+          <Box className={"order-info-box"} sx={{ mt: "15px" }}>
+            <input
+              type={"text"}
+              name={"cardNumber"}
+              placeholder={"Card number : **** 4090 2002 7495"}
+              className={"card-input"}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <input
+                type={"text"}
+                name={"cardPeriod"}
+                placeholder={"07 / 24"}
+                className={"card-half-input"}
+              />
+              <input
+                type={"text"}
+                name={"cardCVV"}
+                placeholder={"CVV : 010"}
+                className={"card-half-input"}
+              />
+            </div>
+            <input
+              type={"text"}
+              name={"cardCreator"}
+              placeholder={"Justin Robertson"}
+              className={"card-input"}
+            />
+            <div className={"cards-box"}>
+              <img src={"/icons/western-card.svg"} />
+              <img src={"/icons/master-card.svg"} />
+              <img src={"/icons/paypal-card.svg"} />
+              <img src={"/icons/visa-card.svg"} />
+            </div>
+          </Box>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\ordersPage\PausedOrders.tsx =====
+
+import React from "react";
+import { Box, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import TabPanel from "@mui/lab/TabPanel";
+
+export default function PausedOrders() {
+  return (
+    <TabPanel value={"1"}>
+      <Stack>
+        {[1, 2].map((ele, index) => {
+          return (
+            <Box key={index} className={"order-main-box"}>
+              <Box className={"order-box-scroll"}>
+                {[1, 2, 3].map((ele2, index2) => {
+                  return (
+                    <Box key={index2} className={"orders-name-price"}>
+                      <img
+                        src={"/img/lavash.webp"}
+                        className={"order-dish-img"}
+                      />
+                      <p className={"title-dish"}>Lavash</p>
+                      <Box className={"price-box"}>
+                        <p>$9</p>
+                        <img src={"/icons/close.svg"} />
+                        <p>2</p>
+                        <img src={"/icons/pause.svg"} />
+                        <p style={{ marginLeft: "15px" }}>$24</p>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              <Box className={"total-price-box"}>
+                <Box className={"box-total"}>
+                  <p>Product price</p>
+                  <p>$18</p>
+                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+                  <p>Delivery cost</p>
+                  <p>$2</p>
+                  <img
+                    src={"/icons/pause.svg"}
+                    style={{ marginLeft: "20px" }}
+                  />
+                  <p>Total</p>
+                  <p>$20</p>
+                </Box>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={"cancel-button"}
+                >
+                  Cancel
+                </Button>
+                <Button variant="contained" className={"pay-button"}>
+                  Payment
+                </Button>
+              </Box>
+            </Box>
+          );
+        })}
+
+        {true && (
+          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+            <img
+              src={"/icons/noimage-list.svg"}
+              style={{ width: 300, height: 300 }}
+            />
+          </Box>
+        )}
+      </Stack>
+    </TabPanel>
+  );
+}
+
+
+===== FILE: src\app\screens\ordersPage\ProcessOrders.tsx =====
+
+import React from "react";
+import { Box, Stack } from "@mui/material";
+import Button from "@mui/material/Button";
+import TabPanel from "@mui/lab/TabPanel";
+import moment from "moment";
+
+export default function ProcessOrders() {
+  return (
+    <TabPanel value={"2"}>
+      <Stack>
+        {[1, 2].map((ele, index) => {
+          return (
+            <Box key={index} className={"order-main-box"}>
+              <Box className={"order-box-scroll"}>
+                {[1, 2].map((ele2, index2) => {
+                  return (
+                    <Box key={index2} className={"orders-name-price"}>
+                      <img
+                        src={"/img/kebab.webp"}
+                        className={"order-dish-img"}
+                      />
+                      <p className={"title-dish"}>Kebab</p>
+                      <Box className={"price-box"}>
+                        <p>$11</p>
+                        <img src={"/icons/close.svg"} />
+                        <p>2</p>
+                        <img src={"/icons/pause.svg"} />
+                        <p style={{ marginLeft: "15px" }}>$22</p>
+                      </Box>
+                    </Box>
+                  );
+                })}
+              </Box>
+
+              <Box className={"total-price-box"}>
+                <Box className={"box-total"}>
+                  <p>Product price</p>
+                  <p>$22</p>
+                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
+                  <p>delivery cost</p>
+                  <p>$2</p>
+                  <img
+                    src={"/icons/pause.svg"}
+                    style={{ marginLeft: "20px" }}
+                  />
+                  <p>Total</p>
+                  <p>$24</p>
+                </Box>
+                <p className={"data-compl"}>
+                  {moment().format("YY-MM-DD HH:mm")}
+                </p>
+                <Button variant="contained" className={"verify-button"}>
+                  Verify to Fulfil
+                </Button>
+              </Box>
+            </Box>
+          );
+        })}
+
+        {false && (
+          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+            <img
+              src={"/icons/noimage-list.svg"}
+              style={{ width: 300, height: 300 }}
+            />
+          </Box>
+        )}
+      </Stack>
+    </TabPanel>
+  );
+}
+
+
+===== FILE: src\app\screens\productsPage\ChosenProduct.tsx =====
+
+import React, { useEffect } from "react";
+import { Container, Stack, Box } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Divider from "../../components/divider";
+import Button from "@mui/material/Button";
+import Rating from "@mui/material/Rating";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import { FreeMode, Navigation, Thumbs } from "swiper";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setRestaurant, setChosenProduct } from "./slice";
+import { createSelector } from "reselect";
+import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { useParams } from "react-router-dom";
+import ProductService from "../../services/ProductService";
+import MemberService from "../../services/MemberService";
+import { Member } from "../../../lib/types/member";
+import { serverApi } from "../../../lib/config";
+
+/** REDUX SLICE & SELECTOR */
+const actionDispatch = (dispatch: Dispatch) => ({
+  setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
+  setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
+});
+const chosenProductRetriever = createSelector(
+  retrieveChosenProduct,
+  (chosenProduct) => ({
+    chosenProduct,
+  }),
+);
+const restaurantRetriever = createSelector(
+  retrieveRestaurant,
+  (restaurant) => ({
+    restaurant,
+  }),
+);
+
+export default function ChosenProduct() {
+  const { productId } = useParams<{ productId: string }>();
+  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+  const { restaurant } = useSelector(restaurantRetriever);
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProduct(productId)
+      .then((data) => setChosenProduct(data))
+      .catch((err) => console.log(err));
+
+    const member = new MemberService();
+    member
+      .getRestaurant()
+      .then((data) => setRestaurant(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (!chosenProduct) return null;
+  return (
+    <div className={"chosen-product"}>
+      <Box className={"title"}>Product Detail</Box>
+      <Container className={"product-container"}>
+        <Stack className={"chosen-product-slider"}>
+          <Swiper
+            loop={true}
+            spaceBetween={10}
+            navigation={true}
+            modules={[FreeMode, Navigation, Thumbs]}
+            className="swiper-area"
+          >
+            {chosenProduct?.productImages.map((ele: string, index: number) => {
+              const imagePath = `${serverApi}/${ele}`;
+              return (
+                <SwiperSlide key={index}>
+                  <img className="slide-image" src={imagePath} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Stack>
+        <Stack className={"chosen-product-info"}>
+          <Box className={"info-box"}>
+            <strong className={"product-name"}>
+              {chosenProduct?.productName}
+            </strong>
+            <span className={"resto-name"}>{restaurant?.memberNick}</span>
+            <span className={"resto-name"}>{restaurant?.memberPhone}</span>
+            <Box className={"rating-box"}>
+              <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+              <div className={"evaluation-box"}>
+                <div className={"product-view"}>
+                  <RemoveRedEyeIcon sx={{ mr: "10px" }} />
+                  <span>{chosenProduct?.productViews}</span>
+                </div>
+              </div>
+            </Box>
+            <p className={"product-desc"}>
+              {chosenProduct?.productDesc
+                ? chosenProduct.productDesc
+                : "No Description"}
+            </p>
+            <Divider height="1" width="100%" bg="#000000" />
+            <div className={"product-price"}>
+              <span>Price:</span>
+              <span>${chosenProduct?.productPrice}</span>
+            </div>
+            <div className={"button-box"}>
+              <Button variant="contained">Add To Basket</Button>
+            </div>
+          </Box>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\productsPage\index.tsx =====
+
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import ChosenProduct from "./ChosenProduct";
+import Products from "./Products";
+import "../../../css/products.css";
+
+export default function ProductsPage() {
+  const products = useRouteMatch();
+  console.log("products:", products);
+
+  return (
+    <div className={"products-page"}>
+      <Switch>
+        <Route path={`${products.path}/:productId`}>
+          <ChosenProduct />
+        </Route>
+        <Route path={`${products.path}`}>
+          <Products />
+        </Route>
+      </Switch>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\productsPage\Products.tsx =====
+
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Box, Button, Container, Stack } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Badge from "@mui/material/Badge";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setProducts } from "./slice";
+import { createSelector } from "reselect";
+import { retrieveProducts } from "./selector";
+import { Product, ProductInquiry } from "../../../lib/types/product";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
+
+/** REDUX SLICE & SELECTOR */
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
+
+export default function Products() {
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productsRetriever);
+  const [productSearch, setProductSearch] = useState<ProductInquiry>({
+    page: 1,
+    limit: 8,
+    order: "createdAt",
+    productCollection: ProductCollection.DISH,
+    search: "",
+  });
+
+  const [searchText, setSearchText] = useState<string>("");
+  const history = useHistory();
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts(productSearch)
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, [productSearch]);
+
+  useEffect(() => {
+    if (searchText === "") {
+      productSearch.search = "";
+      setProductSearch({ ...productSearch });
+    }
+  }, [searchText]);
+
+  /** HANDLERS **/
+
+  const searchCollectionHandler = (collection: ProductCollection) => {
+    productSearch.page = 1;
+    productSearch.productCollection = collection;
+    setProductSearch({ ...productSearch });
+  };
+
+  const searchOrderHandler = (order: string) => {
+    productSearch.page = 1;
+    productSearch.order = order;
+    setProductSearch({ ...productSearch });
+  };
+
+  const searchProductHandler = () => {
+    productSearch.search = searchText;
+    setProductSearch({ ...productSearch });
+  };
+
+  const paginationHandler = (e: ChangeEvent<any>, value: number) => {
+    productSearch.page = value;
+    setProductSearch({ ...productSearch });
+  };
+
+  const chooseDishHandler = (id: string) => {
+    history.push(`/products/${id}`);
+  };
+
+  return (
+    <div className={"products"}>
+      <Container>
+        <Stack flexDirection={"column"} alignItems={"center"}>
+          <Stack className={"avatar-big-box"}>
+            <Stack className={"top-text"}>
+              <p>Burak Restaurant</p>
+            </Stack>
+            <Stack className={"single-search-big-box"}>
+              <input
+                type={"search"}
+                className={"single-search-input"}
+                name={"singleResearch"}
+                placeholder={"Type here"}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") searchProductHandler();
+                }}
+              />
+              <Button
+                className={"single-button-search"}
+                variant={"contained"}
+                endIcon={<SearchIcon />}
+                onClick={searchProductHandler}
+              >
+                Search
+              </Button>
+            </Stack>
+          </Stack>
+
+          <Stack className={"dishes-filter-section"}>
+            <Stack className={"dishes-filter-box"}>
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "createdAt" ? "primary" : "secondary"
+                }
+                onClick={() => searchOrderHandler("createdAt")}
+              >
+                New
+              </Button>
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "productPrice"
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() => searchOrderHandler("productPrice")}
+              >
+                Price
+              </Button>
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "productViews"
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() => searchOrderHandler("productViews")}
+              >
+                Views
+              </Button>
+            </Stack>
+          </Stack>
+
+          <Stack className={"list-category-section"}>
+            <Stack className={"product-category"}>
+              <div className={"category-main"}>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.productCollection === ProductCollection.OTHER
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    searchCollectionHandler(ProductCollection.OTHER);
+                  }}
+                >
+                  Other
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.productCollection ===
+                    ProductCollection.DESSERT
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    searchCollectionHandler(ProductCollection.DESSERT);
+                  }}
+                >
+                  Dessert
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.productCollection === ProductCollection.DRINK
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    searchCollectionHandler(ProductCollection.DRINK);
+                  }}
+                >
+                  Drink
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.productCollection === ProductCollection.SALAD
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    searchCollectionHandler(ProductCollection.SALAD);
+                  }}
+                >
+                  Salad
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.productCollection === ProductCollection.DISH
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    searchCollectionHandler(ProductCollection.DISH);
+                  }}
+                >
+                  Dish
+                </Button>
+              </div>
+            </Stack>
+
+            <Stack className={"product-wrapper"}>
+              {products.length !== 0 ? (
+                products.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + " litre"
+                      : product.productSize + " size";
+                  return (
+                    <Stack
+                      key={product._id}
+                      className={"product-card"}
+                      onClick={() => chooseDishHandler(product._id)}
+                    >
+                      <Stack
+                        className={"product-img"}
+                        sx={{ backgroundImage: `url(${imagePath})` }}
+                      >
+                        <div className={"product-sale"}>{sizeVolume}</div>
+                        <Button className={"shop-btn"}>
+                          <img
+                            src={"/icons/shopping-cart.svg"}
+                            style={{ display: "flex" }}
+                          />
+                        </Button>
+                        <Button className={"view-btn"} sx={{ right: "36px" }}>
+                          <Badge
+                            badgeContent={product.productViews}
+                            color="secondary"
+                          >
+                            <RemoveRedEyeIcon
+                              sx={{
+                                color:
+                                  product.productViews === 0 ? "gray" : "white",
+                              }}
+                            />
+                          </Badge>
+                        </Button>
+                      </Stack>
+                      <Box className={"product-desc"}>
+                        <span className={"product-title"}>
+                          {product.productName}
+                        </span>
+                        <div className={"product-desc"}>
+                          <MonetizationOnIcon />
+                          {product.productPrice}
+                        </div>
+                      </Box>
+                    </Stack>
+                  );
+                })
+              ) : (
+                <Box className="no-data">Products are not available!</Box>
+              )}
+            </Stack>
+          </Stack>
+
+          <Stack className={"pagination-section"}>
+            <Pagination
+              count={
+                products.length !== 0
+                  ? productSearch.page + 1
+                  : productSearch.page
+              }
+              page={productSearch.page}
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color={"secondary"}
+                />
+              )}
+              onChange={paginationHandler}
+            />
+          </Stack>
+        </Stack>
+      </Container>
+
+      <div className={"brands-logo"}>
+        <Container className={"family-brands"}>
+          <Box className={"category-title"}>Our Family Brands</Box>
+          <Stack className={"brand-list"}>
+            <Box className={"review-box"}>
+              <img src={"/img/gurme.webp"} />
+            </Box>
+            <Box className={"review-box"}>
+              <img src={"/img/seafood.webp"} />
+            </Box>
+            <Box className={"review-box"}>
+              <img src={"/img/doner.webp"} />
+            </Box>
+            <Box className={"review-box"}>
+              <img src={"/img/sweets.webp"} />
+            </Box>
+          </Stack>
+        </Container>
+      </div>
+
+      <div className={"address"}>
+        <Container>
+          <Stack className={"address-area"}>
+            <Box className={"title"}>Our address</Box>
+            <iframe
+              style={{ marginTop: "60px" }}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96326.03685561026!2d28.92022666528895!3d41.02112846139867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab82bea99445f%3A0x6ed7f4baceb4476c!2sMaiden&#39;s%20Tower!5e0!3m2!1sen!2skr!4v1757106097524!5m2!1sen!2skr"
+              width="1320"
+              height="500"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Stack>
+        </Container>
+      </div>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\productsPage\selector.ts =====
+
+import { createSelector } from "reselect";
+import { AppRootState } from "../../../lib/types/screen";
+
+const selectProductsPage = (state: AppRootState) => state.productsPage;
+
+export const retrieveRestaurant = createSelector(
+  selectProductsPage,
+  (ProductsPage) => ProductsPage.restaurant,
+);
+
+export const retrieveChosenProduct = createSelector(
+  selectProductsPage,
+  (ProductsPage) => ProductsPage.chosenProduct,
+);
+
+export const retrieveProducts = createSelector(
+  selectProductsPage,
+  (ProductsPage) => ProductsPage.products,
+);
+
+
+===== FILE: src\app\screens\productsPage\slice.ts =====
+
+import { createSlice } from "@reduxjs/toolkit";
+import { ProductsPageState } from "../../../lib/types/screen";
+
+const initialState: ProductsPageState = {
+  restaurant: null,
+  chosenProduct: null,
+  products: [],
+};
+
+const productsPageSlice = createSlice({
+  name: "productsPage",
+  initialState,
+  reducers: {
+    setRestaurant: (state, action) => {
+      state.restaurant = action.payload;
+    },
+    setChosenProduct: (state, action) => {
+      state.chosenProduct = action.payload;
+    },
+    setProducts: (state, action) => {
+      state.products = action.payload;
+    },
+  },
+});
+
+export const { setRestaurant, setChosenProduct, setProducts } =
+  productsPageSlice.actions;
+
+const ProductsPageReducer = productsPageSlice.reducer;
+export default ProductsPageReducer;
+
+
+===== FILE: src\app\screens\usersPage\index.tsx =====
+
+import { Box, Container, Stack } from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import { Settings } from "./Settings";
+import "../../../css/userPage.css";
+
+export default function UserPage() {
+  return (
+    <div className={"user-page"}>
+      <Container>
+        <Stack className={"my-page-frame"}>
+          <Stack className={"my-page-left"}>
+            <Box display={"flex"} flexDirection={"column"}>
+              <Box className={"menu-name"}>Modify Member Details</Box>
+              <Box className={"menu-content"}>
+                <Settings />
+              </Box>
+            </Box>
+          </Stack>
+
+          <Stack className={"my-page-right"}>
+            <Box className={"order-info-box"}>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+              >
+                <div className={"order-user-img"}>
+                  <img
+                    src={"/icons/default-user.svg"}
+                    className={"order-user-avatar"}
+                  />
+                  <div className={"order-user-icon-box"}>
+                    <img src={"/icons/user-badge.svg"} />
+                  </div>
+                </div>
+                <span className={"order-user-name"}>Martin</span>
+                <span className={"order-user-prof"}>User</span>
+                <span className={"order-user-prof"}>No address</span>
+              </Box>
+              <Box className={"user-media-box"}>
+                <FacebookIcon />
+                <InstagramIcon />
+                <TelegramIcon />
+                <YouTubeIcon />
+              </Box>
+              <p className={"user-desc"}>no description</p>
+            </Box>
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+
+
+===== FILE: src\app\screens\usersPage\Settings.tsx =====
+
+import { Box } from "@mui/material";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import Button from "@mui/material/Button";
+
+export function Settings() {
+  return (
+    <Box className={"settings"}>
+      <Box className={"member-media-frame"}>
+        <img src={"/icons/default-user.svg"} className={"mb-image"} />
+        <div className={"media-change-box"}>
+          <span>Upload image</span>
+          <p>JPG, JPEG, PNG formats only!</p>
+          <div className={"up-del-box"}>
+            <Button component="label">
+              <CloudDownloadIcon />
+              <input type="file" hidden />
+            </Button>
+          </div>
+        </div>
+      </Box>
+      <Box className={"input-frame"}>
+        <div className={"long-input"}>
+          <label className={"spec-label"}>Username</label>
+          <input
+            className={"spec-input mb-nick"}
+            type="text"
+            placeholder={"Martin"}
+            value={"Martin"}
+            name="memberNick"
+          />
+        </div>
+      </Box>
+      <Box className={"input-frame"}>
+        <div className={"short-input"}>
+          <label className={"spec-label"}>Phone</label>
+          <input
+            className={"spec-input mb-phone"}
+            type="text"
+            placeholder={"no phone"}
+            value={"821024694424"}
+            name="memberPhone"
+          />
+        </div>
+        <div className={"short-input"}>
+          <label className={"spec-label"}>Address</label>
+          <input
+            className={"spec-input  mb-address"}
+            type="text"
+            placeholder={"no address"}
+            value={"no address"}
+            name="memberAddress"
+          />
+        </div>
+      </Box>
+      <Box className={"input-frame"}>
+        <div className={"long-input"}>
+          <label className={"spec-label"}>Description</label>
+          <textarea
+            className={"spec-textarea mb-description"}
+            placeholder={"no description"}
+            value={"no description"}
+            name="memberDesc"
+          />
+        </div>
+      </Box>
+      <Box className={"save-box"}>
+        <Button variant={"contained"}>Save</Button>
+      </Box>
+    </Box>
+  );
+}
+
+
+===== FILE: src\app\screens\Test.tsx =====
+
+// @ts-nocheck
+import React, { Component } from "react";
+
+class Test extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      brand: "Ford",
+      model: "Mustang",
+      color: "red",
+      year: 1964,
+    };
+  }
+
+  changeDetail = () => {
+    this.setState({
+      color: "blue",
+      brand: "Tesla",
+      model: "Model S",
+      year: 2023,
+    });
+  };
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    // runs after first render => RETRIEVE DATA FROM BACKEND SERVER
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+    // runs before component unmount
+  }
+
+  componentDidUpdate() {}
+
+  render() {
+    return (
+      <div>
+        <h1>My {this.state.brand}</h1>
+        <p>
+          Color: {this.state.color} - Model: {this.state.model} from{" "}
+          {this.state.year}.
+        </p>
+        <button type="button" onClick={this.changeDetail}>
+          Change Detail
+        </button>
+      </div>
+    );
+  }
+}
+
+export default Test;
+
+
+===== FILE: src\app\services\MemberService.ts =====
+
+import axios from "axios";
+import { serverApi } from "../../lib/config";
+import { Member } from "../../lib/types/member";
+
+class MemberService {
+  private readonly path: string;
+
+  constructor() {
+    this.path = serverApi;
+  }
+
+  public async getTopUsers(): Promise<Member[]> {
+    try {
+      const url = this.path + "/member/top-users";
+      const result = await axios.get(url);
+      console.log("getTopUsers:", result);
+
+      return result.data;
+    } catch (err) {
+      console.log("Error, getTopUsers:", err);
+      throw err;
+    }
+  }
+
+  public async getRestaurant(): Promise<Member> {
+    try {
+      const url = this.path + "/member/restaurant";
+      const result = await axios.get(url);
+      console.log("getRestaurant:", result);
+
+      const restaurant: Member = result.data;
+      return restaurant;
+    } catch (err) {
+      console.log("Error, getRestaurant:", err);
+      throw err;
+    }
+  }
+}
+
+export default MemberService;
+
+
+===== FILE: src\app\services\ProductService.ts =====
+
+import axios from "axios";
+import { serverApi } from "../../lib/config";
+import { Product, ProductInquiry } from "../../lib/types/product";
+
+class ProductService {
+  private readonly path: string;
+
+  constructor() {
+    this.path = serverApi;
+  }
+
+  public async getProducts(input: ProductInquiry): Promise<Product[]> {
+    try {
+      let url = `${this.path}/product/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
+      if (input.productCollection)
+        url += `&productCollection=${input.productCollection}`;
+      if (input.search) url += `&search=${input.search}`;
+
+      const result = await axios.get(url);
+      console.log("getProducts:", result);
+
+      return result.data;
+    } catch (err) {
+      console.log("Error, getProducts:", err);
+      throw err;
+    }
+  }
+
+  public async getProduct(productId: string): Promise<Product> {
+    try {
+      const url = `${this.path}/product/${productId}`;
+      const result = await axios.get(url, { withCredentials: true });
+      console.log("getProduct:", result);
+
+      return result.data;
+    } catch (err) {
+      console.log("Error, getProduct:", err);
+      throw err;
+    }
+  }
+}
+
+export default ProductService;
+
+
+===== FILE: src\app\App.test.tsx =====
+
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import App from './App';
+
+// test('renders learn react link', () => {
+//   const { getByText } = render(
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   );
+
+//   expect(getByText(/learn/i)).toBeInTheDocument();
+// });
+
+
+===== FILE: src\app\App.tsx =====
+
+// @ts-nocheck
+import React from "react";
+import { Container, Stack, Box, Typography, Button } from "@mui/material";
+import { Link, Route, Switch, useLocation } from "react-router-dom";
+import AboutPage from "./screens/helpPage";
+import UsersPage from "./screens/usersPage";
+import OrdersPage from "./screens/ordersPage";
+import ProductsPage from "./screens/productsPage";
+import HomePage from "./screens/homePage";
+import Test from "./screens/Test";
+import OtherNavbar from "./components/headers/OtherNavbar";
+import HomeNavbar from "./components/headers/homeNavbar";
+import Footer from "./components/footer";
+import "../css/app.css";
+import "../css/navbar.css";
+import "../css/footer.css";
+
+function App() {
+  const location = useLocation();
+
+  return (
+    <>
+      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
+      <Switch>
+        <Route path="/help">
+          <AboutPage />
+        </Route>
+        <Route path="/member-page">
+          <UsersPage />
+        </Route>
+        <Route path="/orders">
+          <OrdersPage />
+        </Route>
+        <Route path="/products">
+          <ProductsPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+      <Footer />
+    </>
+  );
+}
+
+export default App;
+
+
+===== FILE: src\app\hooks.ts =====
+
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from './store';
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+
+===== FILE: src\app\store.ts =====
+
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import HomePageReducer from "./screens/homePage/slice";
+import ProductsPageReducer from "./screens/productsPage/slice";
+import reduxLogger from "redux-logger";
+
+export const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    // @ts-ignore
+    getDefaultMiddleware().concat(reduxLogger),
+  reducer: {
+    homePage: HomePageReducer,
+    productsPage: ProductsPageReducer,
+  },
+});
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
+
+
+===== FILE: src\css\app.css =====
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-float infinite 3s ease-in-out;
+  }
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: rgb(112, 76, 182);
+}
+
+@keyframes App-logo-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+===== FILE: src\css\footer.css =====
+
+.foot-desc-txt {
+  margin-top: 22px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 34px;
+  color: #e3c08d;
+}
+
+.sns-context {
+  margin-top: 17px;
+  width: 137px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.foot-category-title {
+  width: 106px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+  color: #c5c8c9;
+}
+
+.foot-category-link {
+  margin-top: 20px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 170px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 34px;
+}
+
+.foot-category-link a {
+  color: #e3c08d;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.find-us {
+  display: flex;
+  flex-direction: row;
+}
+
+.find-us span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 34px;
+  color: #c5c8c9;
+}
+
+.find-us div {
+  margin-left: 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 34px;
+  color: #e3c08d;
+}
+
+.copyright-txt {
+  margin-top: 17px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 34px;
+  color: #e3c08d;
+}
+
+.foot-category-title:after {
+  display: block;
+  content: "";
+  border-bottom: solid 2px #d7b686;
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+  transform-origin: 0% 50%;
+}
+
+.foot-category-title:hover:after {
+  transform: scaleX(1);
+}
+
+
+===== FILE: src\css\help.css =====
+
+.help-page {
+     display: flex;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.help-page .help-container {
+     flex-direction: row;
+     margin-top: 50px;
+     margin-bottom: 50px;
+}
+
+.help-page .help-menu {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     width: 100%;
+     height: 60px;
+     border-bottom: 1px solid #f8f8ff;
+}
+
+.help-page .help-menu .table-list {
+     display: flex;
+     justify-content: space-between;
+}
+
+.help-page .css-1gsv261 {
+     width: 75%;
+}
+
+.help-page .css-heg063-MuiTabs-flexContainer {
+     justify-content: space-between;
+}
+
+.help-page .css-19kzrtu {
+     padding-top: 24px;
+}
+
+.help-page .help-main-content {
+     width: 100%;
+     height: 1000px;
+}
+
+.help-page .rules-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     padding: 24px;
+     border: 1px solid #ededed;
+     border-radius: 8px;
+     background: #f8f8ff;
+     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+}
+
+.rules-box .rules-frame {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: 100%;
+}
+
+.rules-box .rules-frame p {
+     border-bottom: 1px solid #dddddd;
+     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+     font-size: 1rem;
+     font-weight: 400;
+     letter-spacing: 0.00938em;
+     color: #000000;
+}
+
+.help-page .accordion-menu {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+}
+
+.help-page .admin-letter-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     padding: 60px;
+     border: 1px solid #ededed;
+     border-radius: 8px;
+     background: #f8f8ff;
+     box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
+}
+
+.help-page .admin-letter-box .admin-letter-container {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: 100%;
+}
+
+.help-page .admin-letter-container .admin-letter-frame {
+     display: flex;
+     flex-direction: column;
+     margin-top: 30px;
+}
+
+.help-page .admin-letter-frame span {
+     font-family: "ABeeZee";
+     font-size: 24px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 28px;
+     color: #140342;
+}
+
+.help-page .admin-letter-frame p {
+     margin-top: 20px;
+     font-family: "Sedan";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+}
+
+.help-page .admin-letter-container .admin-letter-frame {
+     display: flex;
+     flex-direction: column;
+}
+
+.help-page .admin-letter-frame .admin-input-box {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     margin-top: 30px;
+}
+
+.help-page .admin-letter-frame .admin-input-box label {
+     font-family: "Verdana";
+     font-size: 16px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 19px;
+     color: #140342;
+}
+
+.help-page .admin-letter-frame .admin-input-box input {
+     display: flex;
+     width: 100%;
+     height: 60px;
+     padding: 20px;
+     border: 1px solid #dddddd;
+     border-radius: 8px;
+     margin-top: 10px;
+     font-family: "Verdana";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f8f8ff;
+}
+
+.help-page .admin-letter-frame .admin-input-box textarea {
+     display: flex;
+     width: 100%;
+     height: 150px;
+     padding: 20px;
+     border: 1px solid #dddddd;
+     border-radius: 8px;
+     margin-top: 10px;
+     font-family: "Verdana";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f8f8ff;
+}
+
+
+===== FILE: src\css\home.css =====
+
+.homepage {
+    width: 100%;
+    height: auto;
+}
+
+/** STATISTICS **/
+
+.homepage .static-frame {
+    width: 100%;
+    height: 236px;
+    background: #343434;
+}
+
+.homepage .static-frame .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.homepage .static-frame .info .static-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 116px;
+}
+
+.homepage .static-frame .info .static-box .static-num {
+    font-family: "Poppins";
+    font-size: 54px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 80px;
+    text-align: center;
+    color: #d7b686;
+}
+
+.homepage .static-frame .info .static-box .static-text {
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 30px;
+    text-align: center;
+    color: #d7b586;
+}
+
+/** POPULAR DISHES **/
+
+.homepage .popular-dishes-frame {
+    display: flex;
+    width: 100%;
+    height: 580px;
+    background: #f8f8ff;
+}
+
+.homepage .popular-dishes-frame .popular-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 45px;
+}
+
+.homepage .popular-dishes-frame .popular-section .category-title {
+    font-family: "Roboto Serif";
+    font-size: 36px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 1.44px;
+    text-align: center;
+    color: #000;
+}
+
+.homepage .popular-dishes-frame .popular-section .cards-frame {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 43px;
+}
+
+.homepage .popular-dishes-frame .cards-frame .card {
+    min-width: 300px;
+    min-height: 430px;
+    cursor: pointer;
+}
+
+.homepage .popular-dishes-frame .cards-frame .card .card-cover {
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0) 200px),
+        linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0) 300px);
+}
+
+.homepage .popular-dishes-frame .no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    font-family: "Poppins";
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    text-transform: capitalize;
+    color: #e3c08d;
+}
+
+/** NEW PRODUCTS **/
+
+.homepage .new-products-frame {
+    display: flex;
+    width: 100%;
+    height: 605px;
+    background: #f8f8ff;
+}
+
+.homepage .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 45px;
+}
+
+.homepage .new-products-frame .category-title {
+    font-family: "Dancing Script";
+    font-size: 36px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 43px;
+}
+
+.homepage .new-products-frame .main .cards-frame {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 47px 2px 2px 2px;
+}
+
+.homepage .new-products-frame .main .card {
+    width: 290px;
+    height: 335px;
+    cursor: pointer;
+}
+
+.homepage .new-products-frame .product-sale {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 30px;
+    border-radius: 25px;
+    margin-top: 10px;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 21px;
+    color: #f8f8ff;
+    background: #ff9200;
+    box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.homepage .new-products-frame .product-detail {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 49%;
+    border-color: #f8f8ff;
+    border-top: 1px solid;
+    margin-top: -12px;
+    background-color: #fafbfb;
+}
+
+.homepage .new-products-frame .product-detail .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.homepage .new-products-frame .product-detail .title {
+    width: 65px;
+    font-weight: 500;
+}
+
+.homepage .new-products-frame .product-detail .price {
+    width: 20px;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.homepage .new-products-frame .product-detail .divider {
+    width: 2px;
+    margin: 0 10px 0 10px;
+    background-color: #d9d9d9;
+}
+
+.homepage .new-products-frame .product-detail .views {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.homepage .new-products-frame .no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    font-family: "Poppins";
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    text-transform: capitalize;
+    color: #e3c08d;
+}
+
+/** ADVERTISEMENT **/
+
+.homepage .ads-restaurant-frame {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 693px;
+    box-shadow: -3px 0px 20px 14px #34343480;
+    transform: perspective(0px);
+}
+
+.homepage .ads-restaurant-frame .ads-video {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    background: #0c0e12;
+    box-shadow: 0px -8px 90px rgb(215 215 255);
+    transform: scale(1.5);
+}
+
+/** ACTIVE USERS **/
+
+.homepage .active-users-frame {
+    display: flex;
+    width: 100%;
+    height: 550px;
+    background: #f8f8ff;
+}
+
+.homepage .active-users-frame .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.homepage .active-users-frame .category-title {
+    font-family: "Dancing Script";
+    font-size: 36px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 43px;
+}
+
+.homepage .cards-frame {
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.homepage .cards-frame .card {
+    min-width: 305px;
+    min-height: 305px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.homepage .cards-frame .member-nickname {
+    font-size: medium;
+    text-align: center;
+}
+
+.homepage .cards-frame .no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    font-family: "Poppins";
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    text-transform: capitalize;
+    color: #e3c08d;
+}
+
+/** EVENTS **/
+
+.homepage .events-frame {
+    display: flex;
+    width: 100%;
+    height: 745px;
+    background: #f8f8ff;
+}
+
+.homepage .events-frame .category-title {
+    padding-top: 20px;
+    font-family: "Dancing Script";
+    font-size: 36px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 43px;
+}
+
+.homepage .events-frame .events-main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.homepage .events-frame .events-main .events-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 70px;
+    margin-bottom: 40px;
+}
+
+.homepage .events-frame .events-main .prev-next-frame {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 25px;
+    margin: 40px 0 40px 0;
+}
+
+.homepage .events-frame .dot-frame-pagination {
+    position: relative;
+    display: flex;
+    width: auto;
+}
+
+.homepage .events-frame .events-main .events-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.homepage .events-frame .events-info .events-info-frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height: 100%;
+}
+
+.homepage .events-frame .events-img {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-size: cover;
+}
+
+.homepage .events-frame .events-desc {
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 7px;
+    background: #f8f8ff;
+    box-shadow: 0px 40px 30px rgba(25, 25, 46, 0.04);
+}
+
+.homepage .events-frame .events-desc .events-bott {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 97%;
+    height: auto;
+}
+
+.homepage .events-frame .events-desc .events-bott .bott-left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.homepage .events-frame .bott-left .event-title-speaker {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.homepage .events-frame .event-title-speaker .event-organizator {
+    display: flex;
+    align-items: center;
+}
+
+.homepage .events-frame .event-title-speaker .event-organizator img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.homepage .events-frame .event-organizator .spec-text-author {
+    font-family: "GT Walsheim Pro";
+    font-style: normal;
+    line-height: 34px;
+    color: #140342;
+}
+
+.homepage .events-frame .bott-left .text-desc {
+    margin-top: 10px;
+    font-family: "GT Walsheim Pro";
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 26px;
+    color: #4f547b;
+}
+
+.homepage .events-frame .bott-left .bott-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    height: 16px;
+    margin-top: 10px;
+}
+
+.homepage .events-frame .bott-info .bott-info-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: auto;
+    height: 100%;
+    margin-left: 10px;
+    font-family: "GT Walsheim Pro";
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 16px;
+    color: #4f547b;
+}
+
+.homepage .events-frame .bott-info .bott-info-main img {
+    margin-right: 10px;
+}
+
+.homepage .events-frame .swiper-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.homepage .events-frame .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    text-align: center;
+    background: #f8f8ff;
+    opacity: 1;
+}
+
+.homepage .events-frame .swiper-pagination-bullet-active {
+    border-radius: 50%;
+    background: #343434;
+}
+
+
+===== FILE: src\css\index.css =====
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+===== FILE: src\css\navbar.css =====
+
+/* Home Navbar */
+
+.home-navbar{
+    width: 100%;
+    height: 773px;
+    display: flex;
+    background: url('/public/img/banner.webp');
+    background-size: cover;
+}
+.home-navbar .navbar-container{
+    margin-top:55px;
+    height:642px;
+}
+
+.home-navbar .navbar-container .menu{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.home-navbar .navbar-container .menu .brand-logo{
+   width: 125px;
+   height: 30px;
+
+}
+
+.home-navbar .navbar-container .menu .links{
+   min-width: 700px;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.home-navbar .navbar-container .menu .links .login-button{
+  background-color: #3776CC;
+  color:#f8f8ff
+}
+
+.home-navbar .navbar-container .menu .user-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 24px;
+}
+
+.home-navbar a{
+    text-decoration: none;
+}
+.home-navbar .hover-line a{
+    color: #f8f8ff;
+    z-index:100;
+}
+
+.home-navbar .underline{
+    display: block;
+    content:"";
+    border-bottom: solid 2px #dfb686;
+}
+
+.home-navbar .hover-line:after{
+    display: block;
+    content:"";
+    border-bottom: solid 2px #dfb686;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+
+}
+.home-navbar .hover-line:hover:after{
+       transform: scaleX(1);
+       
+}
+.home-navbar div.hover-line:after{
+         transform-origin: 0% 50%;
+}
+
+.home-navbar .navbar-container .header-frame{
+    margin-top: 142px;
+    height: 462px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.home-navbar .navbar-container .header-frame .detail{
+    width: 510px;
+    display: flex;
+    flex-direction: column;
+
+
+}
+.home-navbar .navbar-container .header-frame .detail .head-main-txt{
+   width: 450px;
+   height: 150px;
+   font-family: "Roboto serif";
+   font-style: normal;
+   font-size: 50px;
+   font-weight: 500;
+   line-height: normal;
+   letter-spacing: -0.75px;
+   color: #f8f8ff;
+}
+
+.home-navbar .navbar-container .header-frame .detail .wel-txt{
+   width: 510px;
+   height: 42px;
+   font-family: "Roboto serif";
+   font-style: normal;
+   font-size: 36px;
+   font-weight: 400;
+   line-height: normal;
+   letter-spacing: -0.54px;
+   color: #d7b686;
+}
+
+.home-navbar .navbar-container .header-frame .detail .service-txt{
+    margin-top: 23px;
+   width: 153px;
+   height: 23px;
+
+   font-family: "Roboto serif";
+   font-style: normal;
+   font-size: 20px;
+   font-weight: 400;
+   line-height: normal;
+   letter-spacing: -0.3px;
+   color: #d5d5d5;
+}
+
+.home-navbar .navbar-container .detail .signup{
+    margin-top: 73px;
+}
+
+.home-navbar .navbar-container .detail .signup .signup-button{
+    width: 210px;
+    height: 60px;
+    border-radius: 4px;
+    background: #1976d2;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.home-navbar .navbar-container .logo-frame{
+    margin-top: 43px;
+    width: 690px;
+    height: 419px;
+}
+
+.home-navbar .navbar-container .logo-frame .logo-img{
+  width: 100%;
+  height: 100%;
+  background: url("/public/img/logo.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(25%);
+}
+/* Other navbar */
+
+.other-navbar{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background: url('/public/img/banner.webp');
+    background-size: cover;
+}
+.other-navbar .navbar-container{
+    margin-top:55px;
+}
+
+.other-navbar .navbar-container .menu{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.other-navbar .navbar-container .menu .brand-logo{
+   width: 125px;
+   height: 30px;
+
+}
+
+.other-navbar .navbar-container .menu .links{
+   min-width: 700px;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.other-navbar .navbar-container .menu .links .login-button{
+  background-color: #3776CC;
+  color:#f8f8ff
+}
+
+.other-navbar .navbar-container .menu .user-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 24px;
+}
+
+.other-navbar a{
+    text-decoration: none;
+}
+.other-navbar .hover-line a{
+    color: #f8f8ff;
+    z-index:100;
+}
+
+.other-navbar .underline{
+    display: block;
+    content:"";
+    border-bottom: solid 2px #dfb686;
+}
+
+.other-navbar .hover-line:after{
+    display: block;
+    content:"";
+    border-bottom: solid 2px #dfb686;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+
+}
+.other-navbar .hover-line:hover:after{
+       transform: scaleX(1);
+       
+}
+.other-navbar div.hover-line:after{
+         transform-origin: 0% 50%;
+}
+
+
+/* BASKET */
+
+.basket-frame {
+  position: relative;
+  padding: 10px 4px 0px 4px;
+  width: 450px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8ff;
+  border-radius: 16px;
+}
+
+.basket-frame .all-check-box {
+  padding: 0px 6px;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #d7b586;
+  border-width: 1px 0px;
+  border-style: solid;
+  border-color: #343434;
+}
+
+.basket-frame .basket-info-box {
+  position: relative;
+  margin-top: 6px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.basket-info-box .product-img {
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 29px;
+}
+
+.basket-info-box .product-name {
+  margin-left: 11px;
+  width: 185px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #000000;
+}
+
+.basket-info-box .product-price {
+  width: 80px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  color: #ae0000;
+}
+
+.basket-info-box
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 6.5px 14px;
+}
+
+.basket-info-box .css-ece9u5 {
+  min-width: 72px;
+}
+
+.basket-frame .cancel-btn {
+  position: absolute;
+  top: 33%;
+  right: 2%;
+  cursor: pointer;
+}
+
+.basket-frame .basket-order {
+  margin-top: 10px;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.basket-order .price {
+  width: 200px;
+  display: flex;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #000000;
+}
+
+.basket-frame .orders-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.basket-frame .orders-main-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+  width: 100%;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+===== FILE: src\css\order.css =====
+
+.order-page {
+     display: flex;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.order-page .order-container {
+     display: flex;
+     flex-direction: row;
+     margin-top: 50px;
+     margin-bottom: 50px;
+}
+
+.order-page .order-left {
+     width: 860px;
+     height: auto;
+}
+
+.order-page .order-right {
+     display: flex;
+     flex-direction: column;
+     width: 360px;
+     height: auto;
+     margin-top: 86px;
+     margin-left: 30px;
+}
+
+.order-page .order-right .order-info-box {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 360px;
+     height: auto;
+     padding: 20px;
+     border-radius: 16px;
+     margin-bottom: 25px;
+     background: #f8f8ff;
+     box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
+}
+
+.order-page .order-right .order-info-box .member-box {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+}
+
+.order-page .order-right .order-info-box .liner {
+     width: 100%;
+     border: 1px solid #a1a1a1;
+     margin-top: 40px;
+     margin-bottom: 8px;
+}
+
+.order-page .order-info-box .order-user-img {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+}
+
+.order-page .order-info-box .order-user-img .order-user-avatar {
+     width: 117px;
+     height: 112px;
+     border-radius: 37px;
+     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.order-page .order-info-box .order-user-icon-box {
+     position: absolute;
+     top: 81%;
+     right: 0;
+     display: flex;
+     width: 30px;
+     height: 30px;
+     padding: 5px;
+     border-radius: 37px;
+     background: rgba(0, 0, 0, 0.33);
+}
+
+.order-page .order-user-icon-box .order-user-prof-img {
+     filter: brightness(0) invert(1);
+}
+
+.order-page .order-info-box .order-user-name {
+     margin-top: 10px;
+     font-family: 'Commissioner';
+     font-size: 28px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #08090d;
+}
+
+.order-page .order-info-box .order-user-prof {
+     font-family: 'Commissioner';
+     font-size: 20px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #a1a1a1;
+}
+
+.order-page .order-info-box .order-user-address {
+     display: flex;
+     flex-direction: row;
+     width: 90%;
+}
+
+.order-page .order-info-box .spec-address-txt {
+     margin-left: 5px;
+     font-family: 'DM Sans';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 24px;
+     color: #616164;
+}
+
+.order-page .order-info-box .card-input {
+     width: 100%;
+     height: 40px;
+     padding: 10px;
+     border: 0.5px solid #b3a6a6;
+     border-radius: 10px;
+     margin-top: 10px;
+     font-family: 'Nunito';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 22px;
+     letter-spacing: -0.02em;
+     color: #434141;
+     background: #f5f5f5;
+}
+
+.order-page .order-info-box .card-half-input {
+     width: 49%;
+     height: 40px;
+     padding: 10px;
+     border: 0.5px solid #b3a6a6;
+     border-radius: 10px;
+     margin-top: 10px;
+     font-family: 'Nunito';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 22px;
+     letter-spacing: -0.02em;
+     color: #434141;
+     background: #f5f5f5;
+}
+
+.order-page .order-info-box .cards-box {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 80%;
+     margin-top: 35px;
+}
+
+.order-page .order-info-box .css-wca78v-MuiButtonBase-root-MuiButton-root {
+     min-width: 160px;
+}
+
+.order-page .order-left .order-nav-frame {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     width: 100%;
+     height: 60px;
+     border-bottom: 1px solid #f8f8ff;
+}
+
+.order-page .order-left .order-nav-frame .table-list {
+     display: flex;
+     justify-content: space-between;
+}
+
+.order-page .css-1gsv261 {
+     width: 75%;
+}
+
+.order-page .css-heg063-MuiTabs-flexContainer {
+     justify-content: space-between;
+}
+
+.order-page .order-main-content {
+     width: 855px;
+     height: auto;
+}
+
+.order-page .css-19kzrtu {
+     padding-top: 24px;
+}
+
+.order-page .order-main-content .order-main-box {
+     position: relative;
+     width: 100%;
+     max-height: 285px;
+     border-radius: 16px;
+     margin-bottom: 25px;
+     background: #f8f8ff;
+     box-shadow: -13px 16px 4px rgba(0, 0, 0, 0.25), inset 0px -3px 20px 11px #18177033;
+}
+
+.order-page .order-main-content .order-main-box .order-box-scroll {
+     position: relative;
+     display: flex;
+     overflow: hidden;
+     overflow-y: scroll;
+     flex-direction: column;
+     align-items: start;
+     width: 100%;
+     min-height: 105px;
+     max-height: 205px;
+     margin-top: 15px;
+}
+
+.order-page .order-main-content .order-main-box .order-box-scroll::-webkit-scrollbar {
+     width: 7px;
+}
+
+.order-page .order-main-content .order-main-box .order-box-scroll::-webkit-scrollbar-thumb {
+     border-radius: 5px;
+     background-color: #8989db;
+}
+
+.order-page .order-box-scroll .orders-name-price {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     height: 47px;
+     margin-top: 5px;
+     margin-left: 50px;
+}
+
+.order-page .order-box-scroll .orders-name-price .order-dish-img {
+     position: relative;
+     width: 50px;
+     height: 47px;
+     border-radius: 29px;
+     background-size: cover;
+}
+
+.order-page .order-box-scroll .orders-name-price .title-dish {
+     position: relative;
+     width: 260px;
+     height: 36px;
+     margin-left: 20px;
+     font-family: 'Commissioner';
+     font-size: 22px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #000000;
+}
+
+.order-page .order-box-scroll .orders-name-price .price-box {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     max-width: 170px;
+     height: 100%;
+     margin-left: 150px;
+}
+
+.order-page .order-box-scroll .orders-name-price .price-box p {
+     font-family: 'Poppins';
+     font-size: 18px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 27px;
+     color: #262626;
+}
+
+.order-page .order-main-content .order-main-box .total-price-box {
+     position: relative;
+     display: flex;
+     overflow: hidden;
+     flex-direction: row;
+     justify-content: space-around;
+     align-items: center;
+     box-sizing: border-box;
+     width: 100%;
+     height: 41px;
+     border-radius: 5px;
+     margin: 7px 0 7px 0;
+}
+
+.order-page .order-main-content .total-price-box .cancel-button {
+     max-height: 40px;
+     border-radius: 10px;
+     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.order-page .order-main-content .total-price-box .pay-button {
+     max-height: 40px;
+     border-radius: 10px;
+     color: #f8f8ff;
+     background: #56b74d;
+     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.order-page .order-main-content .total-price-box .verify-button {
+     border-radius: 10px;
+     color: #f8f8ff;
+     background: #0288d1;
+     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.order-page .order-main-content .order-main-box .total-price-box .box-total {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: center;
+     max-width: 535px;
+     height: 100%;
+}
+
+.order-page .total-price-box .box-total p {
+     margin-left: 20px;
+     font-family: 'Commissioner';
+     font-size: 14px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #000000;
+}
+
+.order-page .total-price-box .box-total .data-compl {
+     font-family: 'Commissioner';
+     font-size: 14px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #000000;
+}
+
+
+===== FILE: src\css\products.css =====
+
+.products-page {
+     position: relative;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+/** Products **/
+
+.products-page .products {
+     display: flex;
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.products-page .products .avatar-big-box {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 100%;
+     height: auto;
+}
+
+.products-page .products .top-text {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     height: 43px;
+     margin-top: 80px;
+}
+
+.products-page .products .top-text p {
+     position: relative;
+     margin-left: 380px;
+     font-family: "Dancing Script";
+     font-size: 36px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 43px;
+     color: #343434;
+}
+
+.products-page .products .single-search-big-box {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     box-sizing: border-box;
+     width: 337px;
+     height: 33px;
+     border: 1px solid #f8f8ff;
+     border-radius: 18.5px;
+     background: #fffcfc;
+     box-shadow: 0px 4px 4px rgba(213, 213, 213, 0.25);
+}
+
+.products-page .products .single-search-form {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+}
+
+.products-page .products .single-search-input {
+     position: relative;
+     display: flex;
+     width: 225px;
+     height: 30px;
+     padding-left: 10px;
+     border: none;
+     border-radius: 10px 0px 0px 10px;
+     margin-right: 5px;
+     margin-left: 5px;
+     font-family: "GT Walsheim Pro";
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+}
+
+.products-page .products .single-button-search {
+     position: relative;
+     display: flex;
+     width: 100px;
+     height: 33px;
+     border-radius: 18px;
+     color: #d7b586;
+     background: #343434;
+}
+
+.products-page .products .prev-btn,
+.products .next-btn {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 10%;
+     height: 147px;
+}
+
+.products-page .products .restaurant-avatars-wrapper {
+     display: flex;
+     overflow: hidden;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 90%;
+     height: 147px;
+}
+
+.products-page .products .restaurant-avatars-wrapper .restaurant-avatars {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 108px;
+     height: 100%;
+}
+
+.products-page .products .restaurant-avatars img {
+     width: 108px;
+     height: 108px;
+     border-radius: 50%;
+}
+
+.products-page .products .restaurant-avatars span {
+     margin-top: 14px;
+     font-family: "Solway";
+     font-size: 12px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 14px;
+     color: #fffcfc;
+}
+
+.products-page .products .product-wrapper {
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     width: 100%;
+     height: auto;
+     margin-left: 25px;
+}
+
+.products .product-wrapper .no-data {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     font-family: "Poppins";
+     font-size: 30px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 34px;
+     text-transform: capitalize;
+     color: #e3c08d;
+}
+
+.products-page .products .product-card {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 270px;
+     height: auto;
+     margin-top: 40px;
+     margin-right: 24px;
+}
+
+.products-page .products .product-card .product-img {
+     position: relative;
+     width: 273px;
+     height: 275px;
+     border-radius: 0px 50px 0px 0px;
+     background-size: cover;
+}
+
+.products-page .products .product-img .product-sale {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 90px;
+     height: 30px;
+     border-radius: 25px;
+     margin: 10px;
+     font-family: "Poppins";
+     font-size: 12px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 21px;
+     color: #ffffff;
+     background: #ff9200;
+     box-shadow: 4px 6px 20px #0000001a;
+}
+
+.products-page .products .product-card .product-desc {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 90%;
+     cursor: pointer;
+}
+
+.products-page .products .product-desc .product-title {
+     margin-top: 10px;
+     font-family: "Poppins";
+     font-size: 20px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 30px;
+}
+
+.products-page .products .product-desc .product-desc {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: center;
+     margin-top: 2px;
+     font-family: "Poppins";
+     font-size: 24px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 36px;
+     color: #e3c08d;
+}
+
+.products-page .products .product-img:before {
+     content: "";
+     position: absolute;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     z-index: 2;
+     border-radius: 0px 50px 0px 0px;
+     background: rgba(0, 0, 0, 0.5);
+     opacity: 0;
+     transition: opacity 0.5s ease;
+}
+
+.products-page .products .product-img:hover:before {
+     border-radius: 0px 50px 0px 0px;
+     opacity: 1;
+}
+
+.products-page .products .product-img img {
+     position: absolute;
+     z-index: 1;
+     display: block;
+     max-width: 100%;
+     height: auto;
+}
+
+.products-page .products .shop-btn {
+     position: absolute;
+     top: 217px;
+     left: 105px;
+     z-index: 3;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     width: 64px;
+     height: 46px;
+     padding: 20px;
+     border: 2px solid #d7b686;
+     border-radius: 10px;
+     font-family: "Poppins";
+     font-size: 10px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 15px;
+     color: #f8f8ff;
+     background: rgb(198 0 255 / 66%);
+     opacity: 0;
+     transition: opacity 0.5s ease;
+     cursor: pointer;
+}
+
+.products-page .products .product-img:hover .shop-btn {
+     opacity: 1;
+}
+
+.products-page .products .product-img:hover .view-btn {
+     opacity: 1;
+}
+
+.products-page .products .view-btn {
+     position: absolute;
+     top: 223px;
+     z-index: 3;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     width: 40px;
+     min-width: 40px;
+     height: 40px;
+     padding: 5px;
+     border-radius: 50%;
+     background: rgba(0, 0, 0, 0.4);
+     opacity: 0;
+     transition: opacity 0.5s ease;
+     cursor: pointer;
+}
+
+.products-page .products .pagination-section {
+     position: relative;
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     width: 100%;
+     margin-top: 30px;
+}
+
+.products-page .products .brands-logo {
+     display: flex;
+     width: 100%;
+     height: 630px;
+     margin-top: 60px;
+     background-color: #0d1518;
+}
+
+.products-page .products .brands-logo .family-brands {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding-top: 70px;
+}
+
+.products-page .products .brands-logo .family-brands .brand-list {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 100%;
+}
+
+.products-page .products .brands-logo .category-title {
+     font-family: "Dancing Script";
+     font-size: 36px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 43px;
+     color: #d7b686;
+}
+
+.products-page .products .brands-logo .review-box {
+     display: flex;
+     width: 260px;
+     height: 350px;
+     border-radius: 20px;
+     margin-top: 40px;
+     box-shadow: 0px -1px 13px 5px #bab2e3c4;
+     object-fit: fill;
+}
+
+.products-page .products .brands-logo .review-box img {
+     border-radius: 20px;
+}
+
+.products-page .products .brands-logo .review-img {
+     width: 110px;
+     height: 110px;
+     border-radius: 37px;
+     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.products-page .products .brands-logo .review-name {
+     margin-top: 10px;
+     font-family: "Commissioner";
+     font-size: 30px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #08090d;
+}
+
+.products-page .products .brands-logo .review-stars {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 149px;
+     height: 24px;
+     margin-top: 10px;
+}
+
+.products-page .products .brands-logo .review-prof {
+     font-family: "Commissioner";
+     font-size: 20px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #a1a1a1;
+}
+
+.products-page .products .brands-logo .review-desc {
+     margin-top: 10px;
+     font-family: "DM Sans";
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 24px;
+     color: #616164;
+}
+
+.products-page .products .brands-logo .about-left {
+     display: flex;
+     align-items: flex-end;
+     width: 50%;
+     height: auto;
+     border-radius: 0px 50px 0px 0px;
+     background-position: center;
+     background-size: cover;
+}
+
+.products-page .products .address {
+     height: auto;
+     margin-bottom: 60px;
+     background: #f8f8ff;
+}
+
+.products-page .products .address .address-area {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     margin-top: 60px;
+}
+
+.products-page .products .address .title {
+     font-family: "Dancing Script";
+     font-size: 36px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 43px;
+}
+
+.products-page .products .about-left .about-left-desc {
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-end;
+     width: 100%;
+     height: 329px;
+     padding: 20px;
+     background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 90.88%);
+}
+
+.products-page .products .about-left-desc span {
+     font-family: "Poppins";
+     font-size: 28px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 42px;
+     color: #f8f8ff;
+}
+
+.products-page .products .brands-logo .about-right {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     width: 50%;
+     height: 480px;
+     margin-left: 20px;
+}
+
+.products-page .products .about-left-desc p {
+     margin-top: 10px;
+     font-family: "Poppins";
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #d4d4d4;
+}
+
+.products-page .products .about-right .about-right-img {
+     top: 3653px;
+     left: 763px;
+     display: flex;
+     width: 160px;
+     height: 140px;
+     border-radius: 0px 50px 0px 0px;
+     background: url("https://i0.wp.com/educationplanetonline.com/wp-content/uploads/2022/03/Culinary-Schools-in-Europe-1.jpg");
+     background-position: center;
+     background-size: cover;
+}
+
+.products-page .products .about-right .about-right-desc {
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-end;
+     padding-bottom: 5px;
+     margin-left: 20px;
+}
+
+.products-page .products .about-right-desc span {
+     font-family: "Poppins";
+     font-size: 20px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 30px;
+     color: #f8f8ff;
+}
+
+.products-page .products .about-right-desc p {
+     margin-top: 10px;
+     font-family: "Poppins";
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #d4d4d4;
+}
+
+.products-page .products .swiper-wrapper {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+}
+
+.products-page .products .dishes-filter-section {
+     display: flex;
+     flex-direction: row;
+     justify-content: flex-end;
+     width: 90%;
+     margin-top: 65px;
+}
+
+.products-page .products .dishes-filter-box {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     height: auto;
+}
+
+.products-page .products .dishes-filter-box .order {
+     margin-right: 20px;
+}
+
+.products-page .products .list-category-section {
+     display: flex;
+     flex-direction: row;
+     width: 100%;
+     min-height: 600px;
+}
+
+.products-page .products .product-category {
+     display: flex;
+     flex-direction: column;
+     width: 50px;
+     height: auto;
+     margin-top: 60px;
+}
+
+.products-page .product-category .category-main {
+     display: flex;
+     flex-direction: row;
+     justify-content: end;
+     transform: rotate(-90deg);
+
+     /* Standard CSS property */
+     -moz-transform: rotate(-90deg);
+
+     /* Firefox */
+     -ms-transform: rotate(-90deg);
+
+     /* Edge */
+     -o-transform: rotate(-90deg);
+
+     /* Opera */
+     -webkit-transform: rotate(-90deg);
+}
+
+.products-page .product-category .category-main button {
+     min-width: auto;
+     margin-right: 10px;
+}
+
+.products-page .products .css-1p7b7rs-MuiBadge-badge {
+     position: absolute;
+     top: 26%;
+     right: 15%;
+}
+
+/** ChosenProduct **/
+
+.products-page .chosen-product {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.products-page .chosen-product .product-container {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     margin-top: 80px;
+     margin-bottom: 150px;
+}
+
+.products-page .chosen-product .chosen-product-slider {
+     overflow: hidden;
+     width: 48%;
+     height: 480px;
+     border-radius: 16px;
+     background: #ffffff;
+     box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
+          inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
+}
+
+.products-page .chosen-product .chosen-product-slider .swiper-area {
+     width: 100%;
+     height: 1020px;
+     --swiper-navigation-color: #fff;
+     --swiper-pagination-color: #fff;
+}
+
+.products-page .chosen-product .chosen-product-slider .swiper-area .slider-image {
+     width: 100%;
+     height: 100%;
+}
+
+.products-page .chosen-product .chosen-product-info {
+     display: flex;
+     width: 49%;
+     height: 480px;
+     padding: 30px 40px;
+     border-radius: 16px;
+     background: #ffffff;
+     box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
+          inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
+}
+
+.products-page .chosen-product .chosen-product-info .info-box {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+}
+
+.products-page .chosen-product .info-box .product-name {
+     font-family: "Poppins";
+     font-size: 30px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 36px;
+     color: #000000;
+}
+
+.products-page .chosen-product .info-box .resto-name {
+     margin-top: 16px;
+     font-family: "Poppins";
+     font-size: 17px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 15px;
+     color: #979797;
+}
+
+.products-page .chosen-product .info-box .rating-box {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     margin-top: 20px;
+}
+
+.products-page .chosen-product .rating-box .star-box {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     width: auto;
+     height: auto;
+}
+
+.products-page .chosen-product .rating-box .evaluation-box {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     width: auto;
+     height: auto;
+}
+
+.products-page .chosen-product .rating-box .evaluation-box .product-view {
+     display: flex;
+     align-items: center;
+}
+
+.products-page .chosen-product .info-box .product-desc {
+     height: 112px;
+     margin-top: 30px;
+     margin-bottom: 30px;
+     font-family: "Poppins";
+     font-size: 18px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 22px;
+     color: #000000;
+}
+
+.products-page .chosen-product .info-box .product-price {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     margin-top: 20px;
+     margin-bottom: 20px;
+}
+
+.products-page .chosen-product .product-price span {
+     font-family: "Poppins";
+     font-size: 25px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 22px;
+     color: #000000;
+}
+
+.products-page .chosen-product .button-box {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: auto;
+}
+
+.products-page .chosen-product .button-box button {
+     width: 230px;
+     height: 44px;
+     font-family: "Poppins";
+     font-size: 15px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 22px;
+     color: #f8f8ff;
+}
+
+.products-page .chosen-product .title {
+     margin-top: 40px;
+     font-family: "Dancing Script";
+     font-size: 36px;
+     font-weight: 700;
+     font-style: normal;
+     line-height: 43px;
+}
+
+
+===== FILE: src\css\userPage.css =====
+
+.user-page {
+     display: flex;
+     width: 100%;
+     height: auto;
+     background: #f8f8ff;
+}
+
+.user-page .css-heg063-MuiTabs-flexContainer {
+     flex-direction: column;
+}
+
+.user-page .css-mn3ro6-MuiTabs-indicator {
+     width: 0px;
+     height: 0px;
+}
+
+.user-page .css-1ujnqem-MuiTabs-root {
+     width: 100%;
+}
+
+.user-page .my-page-frame {
+     display: flex;
+     flex-direction: row;
+     width: 100%;
+     height: auto;
+     padding: 50px 0 50px 0;
+}
+
+.my-page-frame .my-page-left {
+     display: flex;
+     flex-direction: column;
+     width: 70%;
+     height: auto;
+}
+
+.my-page-left .menu-name {
+     display: flex;
+     justify-content: center;
+     width: 100%;
+     height: 70px;
+     border-bottom: 1px solid #f8f8ff;
+     font-family: 'Poppins';
+     font-size: 45px;
+     font-weight: 600;
+     font-style: normal;
+     color: #f8f8ff;
+}
+
+.my-page-left .menu-content {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     margin-top: 10px;
+}
+
+.my-page-left .write-content {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     margin-top: 10px;
+}
+
+.user-page .menu-content .post-content {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+     margin-top: 10px;
+}
+
+.my-page-frame .my-page-right {
+     display: flex;
+     flex-direction: column;
+     width: 30%;
+     height: auto;
+     margin-left: 30px;
+}
+
+.user-page .order-info-box {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 100%;
+     height: auto;
+     padding: 20px;
+     border-radius: 16px;
+     background: #f6f2ff;
+     box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
+}
+
+.user-page .order-info-box .settings-btn {
+     position: absolute;
+     top: 6%;
+     right: 19%;
+     cursor: pointer;
+}
+
+.user-page .order-info-box .order-user-img {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+}
+
+.user-page .order-info-box .order-user-img .order-user-avatar {
+     width: 150px;
+     height: 150px;
+     border-radius: 37px;
+     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.user-page .order-info-box .order-user-icon-box {
+     position: absolute;
+     top: 81%;
+     right: 0;
+     display: flex;
+     width: 37px;
+     height: 37px;
+     padding: 5px;
+     border-radius: 37px;
+     background: rgb(209 209 209 / 33%);
+}
+
+.user-page .order-info-box .order-user-name {
+     margin-top: 10px;
+     font-family: 'Commissioner';
+     font-size: 28px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #08090d;
+}
+
+.user-page .order-info-box .order-user-prof {
+     font-family: 'Commissioner';
+     font-size: 20px;
+     font-weight: 500;
+     font-style: normal;
+     line-height: 36px;
+     color: #a1a1a1;
+}
+
+.user-page .order-info-box .user-media-box {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 60%;
+     margin-top: 10px;
+}
+
+.user-page .order-info-box .user-desc {
+     display: flex;
+     justify-content: center;
+     width: 90%;
+     margin-top: 30px;
+     font-family: 'DM Sans';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 24px;
+     color: #616164;
+}
+
+.user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
+     min-width: 90%;
+     height: 44px;
+     margin-top: 15px;
+     font-size: 25px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 38px;
+     text-transform: capitalize;
+     color: #f8f8ff;
+}
+
+.user-page .menu-box img {
+     width: 25px;
+}
+
+.user-page .menu-box span {
+     margin-left: 30px;
+     font-family: 'Poppins';
+     font-size: 25px;
+     font-weight: 600;
+     font-style: normal;
+     line-height: 38px;
+     color: #000000;
+}
+
+.user-page .settings {
+     display: flex;
+     flex-direction: column;
+     width: 95%;
+     height: auto;
+}
+
+.user-page .settings .input-frame {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 100%;
+     height: auto;
+}
+
+.user-page .settings .short-input {
+     display: flex;
+     flex-direction: column;
+     width: 49%;
+     height: auto;
+}
+
+.user-page .settings .long-input {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+     height: auto;
+}
+
+.user-page .settings .spec-label {
+     font-family: 'Source Serif Pro';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 25px;
+     color: #f8f8ff;
+}
+
+.user-page .settings .spec-input {
+     position: relative;
+     width: 100%;
+     height: 54px;
+     padding-left: 20px;
+     border: none;
+     border-radius: 5px;
+     margin-top: 10px;
+     font-family: 'GT Walsheim Pro';
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f7f7f7;
+     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user-page .settings .spec-textarea {
+     position: relative;
+     width: 100%;
+     height: 200px;
+     padding: 20px;
+     border: none;
+     border-radius: 5px;
+     margin-top: 10px;
+     font-family: 'GT Walsheim Pro';
+     font-size: 15px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 26px;
+     color: #4f547b;
+     background: #f7f7f7;
+     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user-page .settings .member-media-frame {
+     position: relative;
+     display: flex;
+     width: 100%;
+     height: auto;
+     padding: 10px;
+     border-radius: 5px;
+     margin-top: 25px;
+}
+
+.user-page .settings .member-media-frame .mb-image {
+     width: 100px;
+     height: 100px;
+     border-radius: 50%;
+}
+
+.user-page .settings .media_change-box {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     width: auto;
+     height: 100%;
+     margin-left: 20px;
+}
+
+.user-page .settings .media-change-box span {
+     font-family: 'GT Walsheim Pro';
+     font-size: 16px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 18px;
+     color: #140342;
+}
+
+.user-page .settings .media-change-box p {
+     margin: 10px 0px 14px 0px;
+     font-family: 'GT Walsheim Pro';
+     font-size: 14px;
+     font-weight: 400;
+     font-style: normal;
+     line-height: 16px;
+     color: #4f547b;
+}
+
+.user-page .settings .up-del-box {
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 37px;
+     height: 37px;
+     border-radius: 8px;
+     background: #cbcbcb;
+}
+
+.user-page .settings .up-del-box input {
+     position: absolute;
+     overflow: hidden;
+     clip: rect(0, 0, 0, 0);
+     width: 20px;
+     height: 16px;
+     padding: 0;
+     border: 0;
+     margin: -1px;
+     background: red;
+}
+
+.user-page .settings .save-box {
+     display: flex;
+     justify-content: flex-end;
+     margin-top: 25px;
+}
+
+
+===== FILE: src\lib\data\faq.ts =====
+
+export const faq = [
+  {
+    question: "How to make order?",
+    answer: "You should choose products and make an order via basket!",
+  },
+  {
+    question: "How long does delivery takes?",
+    answer: "It depends on your location. The max delivery time is 1 hour!",
+  },
+  {
+    question: "Is our details secure in this platform?",
+    answer:
+      "Of course, we take full responsibility for your provided user details!",
+  },
+  {
+    question: "I am blocked, what should I do?",
+    answer: "There is a reason for your block, please contact to us!",
+  },
+  {
+    question: "How can I cancel order?",
+    answer:
+      "You can cancel your order any time easily, just go to your orders page!",
+  },
+  {
+    question: "Who developed this platform?",
+    answer: "ITC Global developers developed this platform!",
+  },
+];
+
+
+===== FILE: src\lib\data\plans.ts =====
+
+export const plans = [
+  {
+    title: "Hot Discount Days",
+    desc: "Each Friday we deliver highest discounts",
+    author: "Chef Deming",
+    date: "30 min ago",
+    location: "Turkey, Istambul",
+    img: "/img/discount.webp",
+  },
+  {
+    title: "Coming Soon",
+    desc: "Be ready for fresh Arrivals from Monday!",
+    author: "Belissimo Arthur",
+    date: "2 days ago",
+    location: "Turkey, Istambul",
+    img: "/img/fresh.webp",
+  },
+  {
+    title: "New Project Lunch",
+    desc: "New Restaurant is opening in Florida",
+    author: "Morgan News",
+    date: "5 days ago",
+    location: "USA, Florida",
+    img: "/img/coming.webp",
+  },
+  {
+    title: "Join us on sns",
+    desc: "🥬 We are offering healthy food reciepies on sns",
+    author: "Belissimo Agent",
+    date: "A week ago",
+    location: "Europe, France",
+    img: "/img/food-city.webp",
+  },
+];
+
+
+===== FILE: src\lib\data\terms.ts =====
+
+export const terms = [
+  "Making orders from the site is complete, live register to use communications you must pass.",
+  "This is why you cannot cancel your orders once you have paid for them check before making payments.",
+  "It is not possible to write and distribute personal ads without the permission of the admin.",
+  "All your actions are under the control of our restaurant administration, so please follow the general rules.",
+];
+
+
+===== FILE: src\lib\enums\member.enum.ts =====
+
+export enum MemberType {
+  USER = "USER",
+  RESTAURANT = "RESTAURANT",
+}
+
+export enum MemberStatus {
+  ACTIVE = "ACTIVE",
+  BLOCK = "BLOCK",
+  DELETE = "DELETE",
+}
+
+
+===== FILE: src\lib\enums\order.enum.ts =====
+
+export enum OrderStatus {
+  PAUSE = "PAUSE",
+  PROCESS = "PROCESS",
+  FINISH = "FINISH",
+  DELETE = "DELETE",
+}
+
+
+===== FILE: src\lib\enums\product.enum.ts =====
+
+export enum ProductSize {
+  SMALL = "SMALL",
+  NORMAL = "NORMAL",
+  LARGE = "LARGE",
+  SET = "SET",
+}
+
+export enum ProductVolume {
+  HALF = 0.5,
+  ONE = 1,
+  ONE_POINT_TWO = 1.2,
+  ONE_POINT_FIVE = 1.5,
+  TWO = 2,
+}
+
+export enum ProductStatus {
+  PAUSE = "PAUSE",
+  PROCESS = "PROCESS",
+  DELETE = "DELETE",
+}
+
+export enum ProductCollection {
+  DISH = "DISH",
+  SALAD = "SALAD",
+  DESSERT = "DESERT",
+  DRINK = "DRINK",
+  OTHER = "OTHER",
+}
+
+
+===== FILE: src\lib\enums\view.enum.ts =====
+
+export enum ViewGroup {
+  PRODUCT = "PRODUCT",
+}
+
+
+===== FILE: src\lib\types\member.ts =====
+
+import { MemberStatus, MemberType } from "../enums/member.enum";
+
+export interface Member {
+  _id: string;
+  memberType: MemberType;
+  memberStatus: MemberStatus;
+  memberNick: string;
+  memberPhone: string;
+  memberPassword?: string;
+  memberAddress?: string;
+  memberDesc?: string;
+  memberImage?: string;
+  memberPoints: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface MemberInput {
+  memberType?: MemberType;
+  memberStatus?: MemberStatus;
+  memberNick: string;
+  memberPhone: string;
+  memberPassword: string;
+  memberAddress?: string;
+  memberDesc?: string;
+  memberImage?: string;
+  memberPoints?: number;
+}
+
+export interface LoginInput {
+  memberNick: string;
+  memberPassword: string;
+}
+
+export interface MemberUpdateInput {
+  memberNick?: string;
+  memberPhone?: string;
+  memberPassword?: string;
+  memberAddress?: string;
+  memberDesc?: string;
+  memberImage?: string;
+}
+
+
+===== FILE: src\lib\types\product.ts =====
+
+import {
+  ProductCollection,
+  ProductSize,
+  ProductStatus,
+} from "../enums/product.enum";
+
+export interface Product {
+  _id: string;
+  productStatus: ProductStatus;
+  productCollection: ProductCollection;
+  productName: string;
+  productPrice: number;
+  productLeftCount: number;
+  productSize: ProductSize;
+  productVolume: number;
+  productDesc?: string;
+  productImages: string[];
+  productViews: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ProductInquiry {
+  order: string;
+  page: number;
+  limit: number;
+  productCollection?: ProductCollection;
+  search?: string;
+}
+
+
+===== FILE: src\lib\types\screen.ts =====
+
+import { Member } from "./member";
+import { Product } from "./product";
+
+/** REACT APP STATE **/
+export interface AppRootState {
+  homePage: HomePageState;
+  productsPage: ProductsPageState;
+}
+
+/** HOMEPAGE **/
+export interface HomePageState {
+  popularDishes: Product[];
+  newDishes: Product[];
+  topUsers: Member[];
+}
+
+/** PRODUCTS PAGE **/
+export interface ProductsPageState {
+  restaurant: Member | null;
+  chosenProduct: Product | null;
+  products: Product[];
+}
+
+/** ORDERS PAGE **/
+
+
+===== FILE: src\lib\config.ts =====
+
+export const serverApi: string = `${process.env.REACT_APP_API_URL}`;
+
+export const Messages = {
+  error1: "Something went wrong!",
+  error2: "Please login first!",
+  error3: "Please fulfill all inputs!",
+  error4: "Message is empty!",
+  error5: "Only images with jpeg, jpg, png format allowed!",
+};
+
+
+===== FILE: src\src\global.d.ts =====
+
+declare module "*.css";
+import * as React from "react";
+
+declare global {
+  namespace JSX {
+    interface ElementClass extends React.Component<any, any> {
+      render(): React.ReactNode;
+    }
+  }
+}
+
+export {};
+
+
+===== FILE: src\index.tsx =====
+
+// @ts-nocheck
+import React from "react";
+import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from "./app/App";
+import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./app/material/MaterialTheme";
+import "./css/index.css";
+import { BrowserRouter as Router } from "react-router-dom";
+
+const container = document.getElementById("root")!;
+const root = createRoot(container);
+
+// global integration
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>,
+);
+
+reportWebVitals();
+
+
+===== FILE: src\react-app-env.d.ts =====
+
+/// <reference types="react-scripts" />
+declare module "*.css";
+
+
+===== FILE: src\reportWebVitals.ts =====
+
+import { ReportHandler } from 'web-vitals';
+
+const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+  if (onPerfEntry && onPerfEntry instanceof Function) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(onPerfEntry);
+      getFID(onPerfEntry);
+      getFCP(onPerfEntry);
+      getLCP(onPerfEntry);
+      getTTFB(onPerfEntry);
+    });
+  }
+};
+
+export default reportWebVitals;
+
+
+===== FILE: src\setupTests.ts =====
+
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import '@testing-library/jest-dom/extend-expect';
