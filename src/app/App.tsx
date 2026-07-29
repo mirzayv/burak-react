@@ -1,24 +1,28 @@
-// @ts-nocheck
-import React from "react";
-import { Container, Stack, Box, Typography, Button } from "@mui/material";
-import { Link, Route, Switch, useLocation } from "react-router-dom";
-import AboutPage from "./screens/helpPage";
-import UsersPage from "./screens/usersPage";
-import OrdersPage from "./screens/ordersPage";
-import ProductsPage from "./screens/productsPage";
+import React, { useState } from "react";
+import { Route, Switch, useLocation } from "react-router-dom";
 import HomePage from "./screens/homePage";
-import Test from "./screens/Test";
-import OtherNavbar from "./components/headers/OtherNavbar";
+import ProductsPage from "./screens/productsPage";
+import OrdersPage from "./screens/ordersPage";
+import UsersPage from "./screens/usersPage";
 import HomeNavbar from "./components/headers/homeNavbar";
+import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
+import HelpPage from "./screens/helpPage";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
 import useBasket from "./hooks/useBasket";
+import AuthenticationModal from "./components/auth";
 
 function App() {
   const location = useLocation();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+
+  /** HANDLERS **/
+  const handleSignupClose = () => setSignupOpen(false);
+  const handleLoginClose = () => setLoginOpen(false);
 
   return (
     <>
@@ -41,7 +45,7 @@ function App() {
       )}
       <Switch>
         <Route path="/help">
-          <AboutPage />
+          <HelpPage />
         </Route>
         <Route path="/member-page">
           <UsersPage />
@@ -57,6 +61,13 @@ function App() {
         </Route>
       </Switch>
       <Footer />
+
+      <AuthenticationModal
+        signupOpen={signupOpen}
+        loginOpen={loginOpen}
+        handleLoginClose={handleLoginClose}
+        handleSignupClose={handleSignupClose}
+      />
     </>
   );
 }
