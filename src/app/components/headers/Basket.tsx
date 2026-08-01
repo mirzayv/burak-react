@@ -23,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const { authMember } = useGlobals();
+  const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
   const itemsPrice: number = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
@@ -44,7 +44,7 @@ export default function Basket(props: BasketProps) {
     setAnchorEl(null);
   };
 
-  const procceedOrderHandler = async () => {
+  const proceedOrderHandler = async () => {
     try {
       handleClose();
       if (!authMember) throw new Error(Messages.error2);
@@ -54,7 +54,7 @@ export default function Basket(props: BasketProps) {
 
       onDeleteAll();
 
-      // REFRESH VIA CONTEXT
+      setOrderBuilder(new Date());
       history.push("/orders");
     } catch (err) {
       console.log(err);
@@ -73,7 +73,7 @@ export default function Basket(props: BasketProps) {
         onClick={handleClick}
       >
         <Badge badgeContent={cartItems.length} color="secondary">
-          <img src={"/icons/shopping-cart.svg"} />
+          <img src={"/icons/shopping-cart.svg"} alt={""} />
         </Badge>
       </IconButton>
       <Menu
@@ -138,7 +138,7 @@ export default function Basket(props: BasketProps) {
                         onClick={() => onDelete(item)}
                       />
                     </div>
-                    <img src={imagePath} className={"product-img"} />
+                    <img src={imagePath} className={"product-img"} alt={""} />
                     <span className={"product-name"}>{item.name}</span>
                     <p className={"product-price"}>
                       ${item.price} x {item.quantity}
@@ -167,7 +167,7 @@ export default function Basket(props: BasketProps) {
                 Total: ${totalPrice} ({itemsPrice} + {shippingCost})
               </span>
               <Button
-                onClick={procceedOrderHandler}
+                onClick={proceedOrderHandler}
                 startIcon={<ShoppingCartIcon />}
                 variant={"contained"}
               >
